@@ -1,0 +1,11 @@
+function H = homography(im1,im2)
+    addpath vgg/vgg_examples
+    dmax = 100;     % 
+    w = 11;  
+    points1 =geraFeatures(im1,'harris');
+    points2 =geraFeatures(im2,'harris');
+    
+    [m1,m2] = matchbycorrelation(im1,points1', im2, points2', w, dmax);
+    
+    ransacfithomography_vgg(
+end

@@ -1,0 +1,11 @@
+
+
+barPt=bar(n400d25r10c,'y');
+set(gca,'xticklabel', names);
+ylim([0 0.35]);
+str = sprintf('N = %d r = %d \delta = %d',N,r,delta);
+title('N = 400 r = 10 \delta = 25','FontSize', 15);
+set(gca, 'YGrid','on');
+ylabel('T_{r}');
+str2 = sprintf('n%d/d');
+imwrite('');

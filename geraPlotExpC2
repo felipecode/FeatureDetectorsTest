@@ -1,0 +1,18 @@
+
+
+
+x2 = 0:0.001:1;
+hold on
+load('15071C1V.mat');
+pt = plot(x2,genPoliExp(x,harcolor,degree),'g-',x2,genPoliExp(x,lapvec,degree),'m-','lineWidth',1);
+load('50071C1V.mat');
+pt = plot(x2,genPoliExp(x,harcolor,degree),'g-',x2,genPoliExp(x,lapvec,degree),'m-','lineWidth',3);
+load('70071C1V.mat');
+pt = plot(x2,genPoliExp(x,harcolor,degree),'g-',x2,genPoliExp(x,lapvec,degree),'m-','lineWidth',6);
+
+legend1=legend('N=150','N=500','N=700');
+set(legend1,'FontSize',13,'FontName','Courier 10 Pitch');
+
+title('Exponential Regression - Harris Color and Laplacian','FontSize',17,'FontName','Courier 10 Pitch');
+ylabel('T_{r}');
+xlabel('c_{est}');

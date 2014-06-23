@@ -1,0 +1,21 @@
+function pointsNMS = especialnms(im,points,radius)
+    maskSi = zeros(size(im));
+for i=1:size(points,1)
+    maskSi(uint16(points(i,1)),uint16(points(i,2)))=points(i,4)>0;
+end
+    addpath gbvs
+    salMap = ittikochmap(im);
+    maskSi(size(salMap.master_map_resized)) = 0; % make dimensions equal
+    salMap.master_map_resized(size(maskSi,1),size(maskSi,2)) = 0; % make dimensions equal
+    size(points)
+    figure;
+    imshow(maskSi);
+    
+    maskSiS = salMap.master_map_resized.*maskSi;
+    figure
+    imshow(maskSiS);
+    maskSiS = maskSiS;
+    [r,c,max_local] = findLocalMaximum(maskSiS,radius);
+    pointsNMS = [r c];
+    
+    rmpath gbvs

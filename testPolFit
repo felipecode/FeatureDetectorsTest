@@ -1,0 +1,5 @@
+ 
+degree = 1;
+figure;
+pt = plot(x2,genPoli(x,harvec,degree),'b-',x2,genPoli(x,hesvec,degree),'r-',x2,genPoli(x,lapvec,degree),'m-',x2,genPoli(x,harcolorb,degree),'g--',x2,genPoli(x,harcolor,degree),'k--');
+pt2 = plot(

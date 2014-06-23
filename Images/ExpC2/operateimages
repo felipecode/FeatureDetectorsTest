@@ -1,0 +1,16 @@
+
+
+sumIm = zeros(3000,2250);
+
+
+for k = 50:50:400
+    str = int2str(k);
+    cd(str);
+
+    files = dir(str)
+    for 
+
+    cd ../
+    
+    
+end

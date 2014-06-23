@@ -1,0 +1,4 @@
+pt1=geraPlot4(imvec)
+pt2=geraPlot4(imvecl)
+pt3=geraPlot3(imvecl)
+pt4=geraPlot2(imvecl)

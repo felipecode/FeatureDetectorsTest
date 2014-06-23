@@ -1,0 +1,23 @@
+function nRep = countFeatures(points1,points2,mov,imsize)
+
+    
+    maskP1 = zeros(imsize);
+    maskP2 = zeros(imsize);
+    for i=1:size(points1,1)
+        maskP1(uint16(points1(i,1)),uint16(points1(i,2)))=1;
+        maskP2(uint16(points2(i,1)),uint16(points2(i,2)))=1;
+    end
+    mask = fspecial('disk',mov)>0;
+    maskP1 = ordfilt2(maskP1, sum(mask(:)), mask);
+
+    index = maskP1==maskP2;
+    figure
+    imshow(index);
+    figure;
+    imshow(maskP1);
+    figure;
+    imshow(maskP2);
+    
+    nRep=sum(index(:,:));
+
+end

@@ -1,0 +1,20 @@
+harriscolortest1 = geraFeatures(rgb2gray(im1),'harriscolor');
+harriscolortest2 = geraFeatures(rgb2gray(im2),'harriscolor');
+harriscolortest3 = geraFeatures(rgb2gray(im3),'harriscolor');
+harriscolortest4 = geraFeatures(rgb2gray(im4),'harriscolor');
+harriscolortest4 = geraFeatures(rgb2gray(im5),'harriscolor');
+harriscolorVec = [size(harriscolortest1,1)];
+harriscolorVec = [harriscolorVec, countFeatures(harriscolortest1,harriscolortest2,45,size(rgb2gray(im1l)))];
+harriscolorVec = [harriscolorVec, countFeatures(harriscolortest1,harriscolortest3,45,size(rgb2gray(im1l)))];
+harriscolorVec = [harriscolorVec, countFeatures(harriscolortest1,harriscolortest4,45,size(rgb2gray(im1l)))];
+save();
+
+ harriscolortest1L = geraFeatures(rgb2gray(im1l),'harriscolor');
+ harriscolortest2L = geraFeatures(rgb2gray(im2l),'harriscolor');
+ harriscolortest3L = geraFeatures(rgb2gray(im3l),'harriscolor');
+ harriscolortest4L = geraFeatures(rgb2gray(im4l),'harriscolor');
+
+harriscolorVecL = [size(harriscolortest1L,1)];
+harriscolorVecL = [harriscolorVecL, countFeatures(harriscolortest1L,harriscolortest2L,45,size(rgb2gray(im1l)))];
+harriscolorVecL = [harriscolorVecL, countFeatures(harriscolortest1L,harriscolortest3L,45,size(rgb2gray(im1l)))];
+harriscolorVecL = [harriscolorVecL, countFeatures(harriscolortest1L,harriscolortest4L,45,size(rgb2gray(im1l)))];
