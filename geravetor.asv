@@ -1,6 +1,0 @@
-harrisVecL = [size(harristest1,1)];
-harrisVecL = [harrisVec,nteste];
-harristest3 = geraFeatures(im3,'harris');
-harristest4 = geraFeatures(im4,'harris');
-harrisVec = [harrisVec, countFeatures(harristest1,harristest3,50,size(rgb2gray(im1)))];
-harrisVec = [harrisVec, countFeatures(harristest1,harristest4,50,size(rgb2gray(im1)))];

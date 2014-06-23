@@ -1,5 +1,0 @@
-geraPlot(imvec,400,5,2);
-geraPlot(imvec,400,5,1);
-geraPlot(imvec,400,5,3);
-geraPlot(imvec,400,5,4);
-%
