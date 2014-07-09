@@ -20,9 +20,10 @@ surfvec = geraRepeatVectorConst('surf',imvec,N,delta,epsilon,region);
 fprintf(' Gerou SURF \n');
 harlapvec = geraRepeatVectorConst('harrislap',imvec,N,delta,epsilon,region);
 fprintf(' Gerou Harris Laplace \n');
+kaze = geraRepeatVectorConst('kaze',imvec,N,delta,epsilon,region);
+fprintf(' Gerou Kaze \n');
 
-
-
+kaze = kaze./max(kaze);
 lapvec = lapvec./max(lapvec);
 heslapvec = heslapvec./max(heslapvec);
 harvec = harvec./max(harvec);

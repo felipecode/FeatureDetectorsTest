@@ -17,7 +17,19 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         points=kp_harris(im,N,delta); 
         rmpath Harris
 
-        
+    elseif strcmp(algoritmo,'kaze')
+        addpath Kaze
+        im = rgb2gray(im);
+        points = kaze(im,'dthreshold',0.0003);
+%         points=int32(points);
+%         points=points';
+%         points = especialnms(im,points,N,delta);
+        %figure;
+        %imshow(im);
+        %hold on
+        %drawcircles(points)
+        rmpath Kaze
+     
        
     elseif strcmp(algoritmo,'hessian')
         addpath Hessian
@@ -49,7 +61,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         
         im(950,950) = 0;
         [points,descriptors,scalespace,difofg]=do_sift(im'); 
-        points = points';
+        points = points'
         
         points = especialnms(im,points,N,delta);
 
@@ -107,6 +119,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
          %hold on
          %drawcircles(points)
         
+
         
     elseif strcmp(algoritmo,'harriscolor')
         addpath ColorHarris
