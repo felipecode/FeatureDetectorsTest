@@ -34,7 +34,7 @@
     %set(gca,'Xlabel','Position',[0 -2.0]);
     ylim([0 max([max(harvec),max(hesvec),max(lapvec),max(harcolor),max(harcolorb),max(harlapvec),max(heslapvec),max(siftvec),max(surfvec)])]);
     xlim([0 max(x)]);
-    for i=1:10
+    for i=1:11
         xtl{i} = {juice(i);x(i)};
     end
 
