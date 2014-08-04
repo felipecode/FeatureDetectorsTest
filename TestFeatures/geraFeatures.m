@@ -20,7 +20,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
     elseif strcmp(algoritmo,'kaze')
         addpath Kaze
         im = rgb2gray(im);
-        points = kaze(im,'dthreshold',0.0003);
+        points = kaze(im,'dthreshold',0.0);
 %         points=int32(points);
 %         points=points';
 %         points = especialnms(im,points,N,delta);
@@ -30,7 +30,19 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         %drawcircles(points)
         rmpath Kaze
      
-       
+        elseif strcmp(algoritmo,'censure')
+        addpath Censure
+        im = rgb2gray(im);
+        points = censure(im,300);
+%         points=int32(points);
+%         points=points';
+%         points = especialnms(im,points,N,delta);
+        %figure;
+        %imshow(im);
+        %hold on
+        %drawcircles(points)
+        rmpath Censure
+        
     elseif strcmp(algoritmo,'hessian')
         addpath Hessian
         im = rgb2gray(im);
@@ -61,7 +73,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         
         im(950,950) = 0;
         [points,descriptors,scalespace,difofg]=do_sift(im'); 
-        points = points'
+        points = points';
         
         points = especialnms(im,points,N,delta);
 

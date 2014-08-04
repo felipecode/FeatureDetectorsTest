@@ -1,7 +1,6 @@
 function pt = geraResultsC1valid(imvec,N,delta,epsilon,region)
-
-
-
+censure = geraRepeatVectorConst('censure',imvec,N,delta,epsilon,region);
+fprintf(' Gerou censure \n');
 lapvec = geraRepeatVectorConst('laplacian',imvec,N,delta,epsilon,region);
 fprintf(' Gerou Laplacian \n');
 heslapvec = geraRepeatVectorConst('hessianlap',imvec,N,delta,epsilon,region);
@@ -23,7 +22,7 @@ fprintf(' Gerou Harris Laplace \n');
 kaze = geraRepeatVectorConst('kaze',imvec,N,delta,epsilon,region);
 fprintf(' Gerou Kaze \n');
 
-kaze = kaze./max(kaze);
+
 lapvec = lapvec./max(lapvec);
 heslapvec = heslapvec./max(heslapvec);
 harvec = harvec./max(harvec);
@@ -33,6 +32,9 @@ harcolorb = harcolorb./max(harcolorb);
 siftvec = siftvec./max(siftvec);
 surfvec= surfvec./max(surfvec);
 harlapvec = harlapvec./max(harlapvec);
+kaze = kaze./max(kaze);
+censure = censure./max(censure);
+
 
 
 save(strcat(int2str(N),int2str(delta),int2str(epsilon),'C1V'));

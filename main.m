@@ -2,7 +2,7 @@
 load_files_of_toolbox
 % then we load the images that are going to be tested
 
-imvec =loadImages('Images/ExpCaixa/Uni')
+imvec =loadImages('Images/exp');
 
 N=400;
 delta = 7;
