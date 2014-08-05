@@ -43,7 +43,7 @@ if (FastHessianData.octaves >= 5)
     j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 16, h / 16, s * 16, 291);
     j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 16, h / 16, s * 16, 387);
 end
-
+ 
 % Extract responses from the image
 for i=1:length(responseMap);
     responseMap{i}=FastHessian_buildResponseLayer(responseMap{i},FastHessianData);

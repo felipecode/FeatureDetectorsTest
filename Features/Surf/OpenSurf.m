@@ -88,9 +88,9 @@ FastHessianData.init_sample = Options.init_sample;
 FastHessianData.img = iimg;
 ipts = FastHessian_getIpoints(FastHessianData,Options.verbose);
 
-fprintf(' Saida dos pontos \n');
+%fprintf(' Saida dos pontos \n');
 
-size(ipts)
+%size(ipts)
 
 
 % Describe the interest points

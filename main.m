@@ -8,6 +8,8 @@ N=400;
 delta = 7;
 epsilon = 5;
 
+vl_setup
+
 [r c]=generateValid(imvec);
 region = [r;c]';
 pt = geraResultsC1valid(imvec,N,delta,epsilon,region);

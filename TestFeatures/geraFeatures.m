@@ -53,14 +53,14 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         
     elseif strcmp(algoritmo,'sift')
         
-        % TODO: Totally change this SIFT ! Vl_feat instead.
-        addpath SIFT_YantaoNoemie
+
+        addpath 
         im = rgb2gray(im);
         %figure
         %imshow(im);
         
-        im(950,950) = 0;
-        [points,descriptors,scalespace,difofg]=do_sift(im'); 
+        %im(950,950) = 0;
+        points = vl_sift(im);
         points = points'
         
         points = especialnms(im,points,N,delta);
