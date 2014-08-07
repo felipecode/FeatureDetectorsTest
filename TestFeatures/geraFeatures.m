@@ -30,7 +30,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         %drawcircles(points)
         rmpath Kaze
      
-        elseif strcmp(algoritmo,'censure')
+    elseif strcmp(algoritmo,'censure')
         addpath Censure
         im = rgb2gray(im);
         points = censure(im,300);
@@ -66,22 +66,26 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
     elseif strcmp(algoritmo,'sift')
         
 
-        addpath 
         im = rgb2gray(im);
-        %figure
-        %imshow(im);
+        figure;
+        imshow(im);
         
         %im(950,950) = 0;
+        im= single(im);
         points = vl_sift(im);
-        points = points'
+        points = points';
+        im = uint8(im);
+        
+        % Have to change the X by the y ! Yes. Crazy stuff
+        aux=points(:,1);
+        points(:,1) = points(:,2);
+        points(:,2) = aux;
         
         points = especialnms(im,points,N,delta);
 
 
-        %hold on
-        %drawcircles(points)
-
-        rmpath SIFT_YantaoNoemie
+        hold on
+        drawcircles(points)
 
 
     elseif strcmp(algoritmo,'surf')

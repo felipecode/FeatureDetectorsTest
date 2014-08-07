@@ -1,27 +1,34 @@
-function pointsNMS = especialnms(im,points,N,radius) % <-- gambiarra
-    maskSi = zeros(size(im));
-for i=1:size(points,1)
-    maskSi(uint16(points(i,1)),uint16(points(i,2)))=points(i,4);
-end
+% Compute the non maxima supression. Uses the saliency map to compute.
+% UPDATE : Now with less gambiarra ! :P
+
+% params: @radius the radius of the non maximal suprresion
+
+
+function pointsNMS = especialnms(im,points,N,radius) 
+    
+
+     maskSi = zeros(size(im));
+
 
     
     addpath gbvs
-    %salMap = ittikochmap(im);
-    %size(points)
-    %maskSi(size(salMap.master_map_resized,1),size(salMap.master_map_resized,2)) = 0; % make dimensions equal
-    %maskSi(size(points,1),size(points,2)) = 0;
-    %salMap.master_map_resized(size(maskSi,1),size(maskSi,2)) = 0; % make dimensions equal
-    %points(size(maskSi,1),size(maskSi,2)) = 0;
     
-    size(maskSi)
+    salMap = gbvs(im);
+  
+    
+    for i=1:size(points,1)
+        maskSi(uint16(points(i,1)),uint16(points(i,2)))=salMap.master_map_resized(uint16(points(i,1)),uint16(points(i,2)));
+    end
+    
     %size(points(4,:,:))
-
+    
+    % Gambiarra aqui mas bem de leve. Eh pra fazer uma outra funcao
+    % funcionar. Mas nada que comprometa
+    
     gauss = fspecial('gaussian',15)>0;
     gauss2 = fspecial('gaussian',15,1.5);
     gauss2 = conv2(double(gauss),gauss2,'same');
-    %figure
-    %imshow(maskSi)
-    
+
     
     
     %figure; 
