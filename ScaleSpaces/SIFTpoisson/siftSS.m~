@@ -1,0 +1,28 @@
+function imvec=siftSS(im,nOctaves,imagesPerOctave)
+
+    im = double(im)./255;
+    imvec{nOctaves*imagesPerOctave} = 1;
+
+    s = imagesPerOctave;
+    imagesPerOctave = s +3;
+    sigma = 1.2;
+    
+     
+    imwrite(imvec{1},sprintf('EvaluateScaleSpace/Images/%.2f_surf.png',(boxSize*3)/scaleRatio));
+    
+    for i=1:nOctaves
+         currentSigma = sigma; 
+        for j=1:imagesPerOctave
+            
+            imvec{(i-1)*imagesPerOctave +j} = vl_imsmooth(im,currentSigma);
+            current =  k^
+            
+        end
+        % Takes the image that has twiece the initial value ( Image number
+        % 2)
+        im = imresize(imvec{(i-1)*imagesPerOctave +(imagesPerOctave-2)},0.5,'nearest');
+
+    end
+
+
+end
