@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../lib/libKAZE.a  CMakeFiles/KAZE.dir/lib/KAZE.cpp.o CMakeFiles/KAZE.dir/lib/fed.cpp.o CMakeFiles/KAZE.dir/lib/nldiffusion_functions.cpp.o CMakeFiles/KAZE.dir/lib/utils.cpp.o
+/usr/bin/ranlib ../lib/libKAZE.a

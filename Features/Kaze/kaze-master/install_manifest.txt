@@ -1,0 +1,6 @@
+/usr/local/kaze/lib/libKAZE.a
+/usr/local/kaze/include/KAZE.h
+/usr/local/kaze/include/fed.h
+/usr/local/kaze/include/utils.h
+/usr/local/kaze/include/nldiffusion_functions.h
+/usr/local/kaze/include/KAZEConfig.h
