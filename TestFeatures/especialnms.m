@@ -11,13 +11,13 @@ function pointsNMS = especialnms(im,points,N,radius)
 
 
     
-    addpath gbvs
+    addpath Misc/gbvs
     
     salMap = gbvs(im);
   
     
     for i=1:size(points,1)
-        maskSi(uint16(points(i,1)),uint16(points(i,2)))=salMap.master_map_resized(uint16(points(i,1)),uint16(points(i,2)));
+        maskSi(uint32(points(i,1)),uint32(points(i,2)))=salMap.master_map_resized(uint32(points(i,1)),uint32(points(i,2)));
     end
     
     %size(points(4,:,:))
@@ -42,7 +42,14 @@ function pointsNMS = especialnms(im,points,N,radius)
     % imshow(maskSiS);
 %     
     [r,c,max_local] = findLocalMaximum(maskSiS,radius);
+    length(r)
     
+    
+    if(N > length(r))
+       
+        N = length(r);
+        
+    end
     
     [sortedValues,sortIndex] = sort(max_local(:),'descend');  %# Sort the values in
     maxIndex = sortIndex(1:N);
@@ -61,4 +68,4 @@ function pointsNMS = especialnms(im,points,N,radius)
     end
     pointsNMS = [rf cf];
     
-    rmpath gbvs
+    rmpath Misc/gbvs

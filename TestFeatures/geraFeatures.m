@@ -15,25 +15,55 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         im = rgb2gray(im);
         
         points=kp_harris(im,N,delta); 
+        
+        %if length(points) > 5
+        %    points = harrisnms(im,points,N,delta);
+        %end
+        %imshow(im);
+        %hold on
+        %drawcircles(points);
+        %hold off 
         rmpath Harris
 
     elseif strcmp(algoritmo,'kaze')
         addpath Kaze
         im = rgb2gray(im);
-        points = kaze(im,'dthreshold',0.0);
-%         points=int32(points);
-%         points=points';
-%         points = especialnms(im,points,N,delta);
-        %figure;
+
+        points = kaze(im,'dthreshold',0.00005);
+         points=uint32(points);
+               
+         % Have to change the X by the y ! Yes. Crazy stuff
+        aux=points(:,1);
+        points(:,1) = points(:,2);
+        points(:,2) = aux;               
+                
+
+         
+         if length(points) > 5
+            
+             points = hessiannms(im,points,N,delta);
+         end
         %imshow(im);
         %hold on
-        %drawcircles(points)
+        %drawcircles(points);
+        %hold off 
+
         rmpath Kaze
      
     elseif strcmp(algoritmo,'censure')
-        addpath Censure
-        im = rgb2gray(im);
-        points = censure(im,300);
+        addpath CenSurE
+        imout = rgb2gray(im);
+        Options=struct('tresh',0.0000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',1,'harrisThresh',0.000001);
+        points = CenSur(imout',Options);
+        
+        length(points)
+        if length(points) > 5
+            points = harrisnms(imout,points,N,delta);
+        end
+        %points = points';
+        %if length(points) > 5
+        %    points = especialnms(imout,points,N,delta);
+        %end
 %         points=int32(points);
 %         points=points';
 %         points = especialnms(im,points,N,delta);
@@ -41,12 +71,16 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         %imshow(im);
         %hold on
         %drawcircles(points)
-        rmpath Censure
+        rmpath CenSurE
         
     elseif strcmp(algoritmo,'hessian')
         addpath Hessian
         im = rgb2gray(im);
         points = Hessian(im,N,delta);
+        
+
+        
+                
         %figure;
         %imshow(im);
         %hold on
@@ -57,6 +91,10 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         im = rgb2gray(im);
         addpath Laplacian
         points = laplacian(im,N,delta);
+        
+        %if length(points) > 5
+        %    points = especialnms(im,points,N,delta);
+        %end
 %         figure;
 %         imshow(im);
 %         hold on
@@ -67,8 +105,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         
 
         im = rgb2gray(im);
-        figure;
-        imshow(im);
+
         
         %im(950,950) = 0;
         im= single(im);
@@ -80,12 +117,10 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         aux=points(:,1);
         points(:,1) = points(:,2);
         points(:,2) = aux;
-        
-        points = especialnms(im,points,N,delta);
-
-
-        hold on
-        drawcircles(points)
+        if length(points) > 5                
+            
+             points = hessiannms(im,points,N,delta);
+         end
 
 
     elseif strcmp(algoritmo,'surf')
@@ -100,9 +135,11 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
             points(i,4) = pointsStruct(1,i).response;
         end
         %points = points';
-        
-        points = especialnms(imout,points,N,delta);
-        
+         
+         if length(points) > 5
+            
+             points = hessiannms(imout,points,N,delta);
+         end
         
         %figure;
         %imshow(im);

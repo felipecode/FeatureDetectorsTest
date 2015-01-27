@@ -7,15 +7,15 @@ filter_map = [0,1,2,3;
     5,7,8,9;
     7,9,10,11]+1;
 
-np=0; ipts=struct;
-'buildMap'
+np=0; ipts=[];
+
 % Build the response map
 responseMap=CenSur_buildResponseMap(FastHessianData);
 
 % Find the maxima acrros scale and space
 for o = 1:FastHessianData.octaves
     for i = 1:2
-        filter_map(o,i)
+
         b = responseMap{filter_map(o,i)};
         m = responseMap{filter_map(o,i+1)};
         t = responseMap{filter_map(o,i+2)};
@@ -25,14 +25,20 @@ for o = 1:FastHessianData.octaves
         % sparse layer (always top), to find maxima across scale and space
         [c,r]=ndgrid(0:t.width-1,0:t.height-1);
         r=r(:); c=c(:);
-        p=find(CenSur_isExtremum(r, c, t, m, b,FastHessianData));
-        for j=1:length(p);
-            ind=p(j);
-            [ipts,np]=CenSur_interpolateExtremum(r(ind), c(ind), t, m, b, ipts,np);
-        end
+        p =find(CenSur_isExtremum(r, c, t, m, b,FastHessianData));
+        ipts= [ipts ; [ c(p) r(p)]];
+        
+        np = np + size(p,1);
+        
+        %'size p'
+        %size(p)
+        %for j=1:length(p);
+        %    ind=p(j);
+        %    [ipts,np]=CenSur_interpolateExtremum(r(ind), c(ind), t, m, b, ipts,np);
+        %end
     end
 end
-ipts
+
 
 % Show laplacian and response maps with found interest-points
 if(verbose)

@@ -1,4 +1,4 @@
-FILE(REMOVE_RECURSE
+file(REMOVE_RECURSE
   "CMakeFiles/KAZE.dir/lib/KAZE.cpp.o"
   "CMakeFiles/KAZE.dir/lib/fed.cpp.o"
   "CMakeFiles/KAZE.dir/lib/nldiffusion_functions.cpp.o"
@@ -8,6 +8,6 @@ FILE(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-FOREACH(lang CXX)
-  INCLUDE(CMakeFiles/KAZE.dir/cmake_clean_${lang}.cmake OPTIONAL)
-ENDFOREACH(lang)
+foreach(lang CXX)
+  include(CMakeFiles/KAZE.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

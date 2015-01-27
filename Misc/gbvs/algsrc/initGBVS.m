@@ -30,7 +30,7 @@ if ( ~param.useIttiKochInsteadOfGBVS )
   load mypath;
   ufile = sprintf('%s__m%s__%s.mat',num2str(salmapsize),num2str(param.multilevels),num2str(param.cyclic_type));
   ufile(ufile==' ') = '_';
-  ufile = fullfile( pathroot , 'initcache' ,  ufile );
+  ufile = fullfile( pathroot , 'Misc/gbvs/initcache' ,  ufile );
   if ( exist(ufile) )
     grframe = load(ufile);
     grframe = grframe.grframe;

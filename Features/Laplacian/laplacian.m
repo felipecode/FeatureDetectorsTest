@@ -13,7 +13,7 @@ function points=laplacian(im,N,delta)
     Iyy =conv2(Iy, dy, 'same');
     Ixy = conv2(Ix, dy, 'same');
     
-    % agora só no smooth.
+    % agora sï¿½ no smooth.
     s_I = sigma;
     g = fspecial('gaussian',max(1,fix(6*s_I+1)), s_I);
     Ixx =conv2(Ixx, g, 'same');
@@ -43,10 +43,10 @@ function points=laplacian(im,N,delta)
     [r,c,max_local] = findLocalMaximum(H,delta);
 
     % set threshold 1% of the maximum value
-    %t = 0.008*max(max_local(:));
+    %t = 0.01*max(max_local(:));
 
     % find local maxima greater than threshold
-    %[r,c] = find(max_local>=t);
+    %[rf,cf] = find(max_local>=t);
 
     [sortedValues,sortIndex] = sort(max_local(:),'descend');  %# Sort the values in
     

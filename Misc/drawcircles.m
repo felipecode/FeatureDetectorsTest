@@ -6,7 +6,7 @@ function drawcircles(points,style,radius)
         style='b-';
     end;
     if (nargin<3)
-        radius = 9;
+        radius = 25;
     end
     
     NOP=1000;

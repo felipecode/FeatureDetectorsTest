@@ -1,0 +1,10 @@
+
+x2 = 0:0.001:1;
+degree = 1;
+[a1,b1] =genPoliExp(x,harvec,degree);
+[a2,b2] =genPoliExp(x,hesvec,degree);
+[a3,b3] =genPoliExp(x,lapvec,degree);
+[a4,b4] =genPoliExp(x,sift,degree);
+[a5,b5] =genPoliExp(x,surf,degree);
+[a6,b6] =genPoliExp(x,kaze,degree);
+[a7,b7] =genPoliExp(x,censure,degree);

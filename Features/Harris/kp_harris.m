@@ -59,10 +59,10 @@ function points = kp_harris(im,N,delta)
     [r,c,max_local] = findLocalMaximum(cim,delta);
 
     % set threshold 1% of the maximum value
-    %t = 0.0001*max(max_local(:));
+    %t = 0.000001*max(max_local(:));
    
     % find local maxima greater than threshold
-    %[r,c] = find(max_local>=t);
+   % [rf,cf] = find(max_local>=t);
     
     [sortedValues,sortIndex] = sort(max_local(:),'descend');  %# Sort the values in
 

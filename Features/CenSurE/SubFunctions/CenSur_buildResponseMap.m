@@ -18,30 +18,30 @@ s = (FastHessianData.init_sample);
 
 % Calculate approximated determinant of hessian values
 if (FastHessianData.octaves >= 1)
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w,   h,   1,   2);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w,   h,   1,   1);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, 1, 2);
     j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, 1, 3);
     j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, 1, 4);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, 1, 5);
 end
 
 if (FastHessianData.octaves >= 2)
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h , 1, 7);
     j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h , 1, 8);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h , 1, 9);
 end
 
 if (FastHessianData.octaves >= 3)
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, 1, 16);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h, 1, 17);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, 1, 15);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h, 1, 16);
 end
 
 if (FastHessianData.octaves >= 4)
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h , 1, 32);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h , 1, 33);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h , 1, 31);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h , 1, 32);
 end
 
 if (FastHessianData.octaves >= 5)
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h , 1, 63);
     j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h , 1, 64);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w , h , 1, 65);
 end
  
 % Extract responses from the image

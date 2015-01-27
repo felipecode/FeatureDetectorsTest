@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
   cout << "Number of Keypoints: " << kpts.size() << endl;
 
   // Create the OpenCV window
-  cv::namedWindow("Image",cv::WINDOW_FREERATIO);
+  cv::namedWindow("Image",cv::WINDOW_AUTOSIZE);
 
   // Copy the input image to the color one
   cv::cvtColor(img,img_rgb,cv::COLOR_GRAY2BGR);

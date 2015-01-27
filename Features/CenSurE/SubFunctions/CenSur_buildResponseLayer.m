@@ -53,17 +53,21 @@ sigma = 1.5;
  s_D = 0.7*sigma;
  x  = -round((2*rl.filter +1)*s_D):round((2*rl.filter +1)*s_D);
  dx = x .* exp(-x.*x/(2*s_D*s_D)) ./ (s_D*s_D*s_D*sqrt(2*pi));
-    dy = dx';
+ %dx = [1, 0 , -1];   
+ dy = dx';
 
+    
+    
     % image derivatives
     Ix = conv2(CenResp, dx, 'same');
     Iy = conv2(CenResp, dy, 'same');
 
-  s_I = sigma;
+    s_I = sigma;
     g = fspecial('gaussian',max(1,fix(6*s_I+1)), s_I);
     Ix2 = conv2(Ix.^2, g, 'same'); % Smoothed squared image derivatives
     Iy2 = conv2(Iy.^2, g, 'same');
     Ixy = conv2(Ix.*Iy, g, 'same');
+
 
     % interest point response
     
@@ -79,6 +83,7 @@ A = CenResp(max(r +(c)*sx,1));
 rl.responses = A;     
      
 rl.harrisResponses = cim(max(r +(c)*sx,1));
+
 
 % Get the determinant of hessian response & laplacian sign
 %rl.responses = (Dxx .* Dyy - 0.81 * Dxy .* Dxy);

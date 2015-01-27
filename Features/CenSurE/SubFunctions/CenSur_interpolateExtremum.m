@@ -1,4 +1,4 @@
-function [ipts, np]=FastHessian_interpolateExtremum(r, c,  t,  m,  b,  ipts, np)
+function [ipts, np]=CenSur_interpolateExtremum(r, c,  t,  m,  b,  ipts, np)
 % This function FastHessian_interpolateExtremum will ..
 %
 % [ipts,np] = FastHessian_interpolateExtremum( r,c,t,m,b,ipts,np )
@@ -34,7 +34,7 @@ O=[ Of(1, 1), Of(2, 1), Of(3, 1) ];
 %size(O)
 %get the step distance between filters
 filterStep = fix((m.filter - b.filter));
-double(((2/15) * (m.filter + O(3) * filterStep)))
+double(((2/15) * (m.filter + O(3) * filterStep)));
 
 %If point is sufficiently close to the actual extremum
 

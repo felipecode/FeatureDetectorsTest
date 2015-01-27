@@ -23,9 +23,10 @@ bound_check_fail=(r <= layerBorder | r >= t.height - layerBorder | c <= layerBor
 % check the candidate point in the middle layer is above thresh 
 candidate = FastHessian_getResponse(m,r,c,t);
 harrisResp = FastHessian_getHarrisResponse(m,r,c,t);
-treshold_fail=candidate < FastHessianData.thresh | harrisResp > FastHessianData.thresh;
+treshold_fail=harrisResp < FastHessianData.thresh;
 
 % HERE WE HAVE TO COUNT THE BEST POINTS
+
 
 an=(~bound_check_fail)&(~treshold_fail);
 for rr = -1:1

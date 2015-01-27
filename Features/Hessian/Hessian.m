@@ -53,10 +53,10 @@ function points=Hessian(im,N,delta)
     [r,c,max_local] = findLocalMaximum(H,delta);
 
     % set threshold 1% of the maximum value
-    %t = 0.008*max(max_local(:));
-
+    %t = 0.01*max(max_local(:));
+    
     % find local maxima greater than threshold
-    %[r,c] = find(max_local>=t);
+    %[rf,cf] = find(max_local>=t);
 
     [sortedValues,sortIndex] = sort(max_local(:),'descend');  %# Sort the values in
     

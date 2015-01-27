@@ -10,12 +10,18 @@ function repVec = geraRepeatVectorConst(detector,imvec,N,delta,epsilon,region)
     repVec = zeros(size(imvec,2),1);  % the vector containing the number of repeated features
 
         
-    for i=1:length(imvec)
+    repVec(1) = 1;
+    
+    for i=2:length(imvec)
 
          features= geraFeatures(imvec{i},detector,N,delta);  % the subsequent image features
-         validFeatures = intersect(features,region,'rows'); 
-         repVec(i) = countFeatures(validFeatures0,validFeatures,epsilon,size(rgb2gray(imvec{i})));
-
+         if ~isempty(features)
+             validFeatures = intersect(features,region,'rows'); 
+             repVec(i) = countFeatures(validFeatures0,validFeatures,epsilon,size(rgb2gray(imvec{i})));
+         else
+             repVec(i) = 0;
+         end
+         
     end
     
 end

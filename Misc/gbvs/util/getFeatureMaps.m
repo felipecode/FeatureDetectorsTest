@@ -6,6 +6,7 @@ function [rawfeatmaps, motionInfo] = getFeatureMaps( img , param , prevMotionInf
 
 load mypath;
 
+pathroot =fullfile( pathroot , 'Misc/gbvs/');
 %%%%
 %%%% STEP 1 : form image pyramid and prune levels if pyramid levels get too small.
 %%%%
