@@ -1,7 +1,7 @@
 function imvec = loadImages(path)
 
     cd(path)
-    pngFiles = dir('*.png');
+    pngFiles = dir('*.jpg');
     %imvec = zeros(size()
     imvec{length(pngFiles)} = {};
     for k = 1:length(pngFiles)

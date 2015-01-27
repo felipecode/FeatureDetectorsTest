@@ -1,4 +1,3 @@
-	addpath ../Turbidity' Measure'/
 
     %graylast = imvec{6};
     %gauss = fspecial('gaussian',10,2);
@@ -33,31 +32,31 @@
     validPos =  uniRan(tImage,vector);
     turbid = turbidant;
     
-    for i=4:11
+   % for i=4:4
         
-        showPos(imvec{1},validPos(:,1),validPos(:,2));        
-        turbid = turbidityEst2(imvec{1},imvec{i});
-        tImage = turbidant./turbid;
-        figure;
-        CS = uniRan(tImage,vector);
+        %showPos(imvec{1},validPos(:,1),validPos(:,2));        
+        %turbid = turbidityEst2(imvec{1},imvec{i});
+        %tImage = turbidant./turbid;
+        %figure;
+        %CS = uniRan(tImage,vector);
         
-        validPos = intersect(validPos,CS,'rows');
+        %validPos = intersect(validPos,CS,'rows');
         
 
         %size(tImage)
         %size(imvec{i})
-        turbid = turbidant;
+        %turbid = turbidant;
         %x=[x,mean(CS)];
-        imshow(tImage);
-    end
+        %imshow(tImage);
+       
+   % end
     
     showPos(imvec{1},validPos(:,1),validPos(:,2));
     x = [0];
     SDIvec = 0;
-    for i=2:11
+    for i=2:20
         SDIvec = [ SDIvec ,100 * floor((1- ssim_index(rgb2gray(imvec{1}),rgb2gray(imvec{i})))*10000)/10000];        
          x= [ x, turbidityEst(imvec{1},imvec{i},validPos(:,1),validPos(:,2))];
          
     end
     
-    rmpath ../Turbidity' Measure'/

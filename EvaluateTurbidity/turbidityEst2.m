@@ -1,4 +1,4 @@
-function tmap=turbidityEst2(J,I)
+function tmap=turbidityEst2(J,I,Binf)
 
   %[A,I] = double(max(max(I)))./255;
     
@@ -16,7 +16,7 @@ function tmap=turbidityEst2(J,I)
     
     [H S I ] = rgb2hsv(I);
     [H S J ] = rgb2hsv(J);
-        
+    [H S Binf ] = rgb2hsv(Binf);    
    
     
     %J = double(J)./255;
@@ -24,7 +24,7 @@ function tmap=turbidityEst2(J,I)
     
     
    % A = I(posx(1),posy(1));
-    A = max(max(I));
+
     
     
     %A = I(posx,posy);
@@ -36,10 +36,10 @@ function tmap=turbidityEst2(J,I)
     %figure;
     %imshow(C)
     
-    for i=1:size(I,1)
+     for i=1:size(I,1)
         for j=1:size(J,2)
-            B(i,j) = I(i,j) - A;
-            C(i,j) = J(i,j) - A;
+            B(i,j) = I(i,j) - Binf(i,j);
+            C(i,j) = J(i,j) - Binf(i,j);
             tmap(i,j) = max([0.001 B(i,j)/C(i,j)]);
             if tmap(i,j) == 1
                 tmap(i,j) = 0.988;
@@ -48,8 +48,7 @@ function tmap=turbidityEst2(J,I)
     end
     %  tmap = (B./C);
     %tmap = B./C;
-    figure;
-    imshow(tmap);
+
     %tmap = 1- tmap;
     %max(max(tmap))
     %tmap = tmap./max(max(tmap));
@@ -69,6 +68,8 @@ function tmap=turbidityEst2(J,I)
     %imshow(daltMap);
     
 
+        figure;
+    imshow(tmap);
     
     %figure
     %imshow(cmap);
@@ -78,8 +79,8 @@ function tmap=turbidityEst2(J,I)
     
     %c = max(max(cmap));
     
-    figure
-    imshow(tmap);
+    %figure
+    %imshow(tmap);
 
     
     

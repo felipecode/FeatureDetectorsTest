@@ -1,23 +1,50 @@
 
-load('validPosC1.mat');
-pt4 = geraResultsC1valid(imvec,25,7,1,validPos);
-pt4 = geraResultsC1valid(imvec,1200,7,1,validPos);
+imvec = loadImages('Images/Photo1/Cortadas');
 
-pt4 = geraResultsC1valid(imvec,1500,7,1,validPos);
-
-pt4 = geraResultsC1valid(imvec,15,7,1,validPos);
+load('validPosF1.mat');
 
 
-load('validPosC2.mat');
+
+pt4 = geraResultsF1valid(imvec,1000,25,8,validPos);
+
+
+
+
+imvec = loadImages('Images/Photo2/Cortadas');
+
+load('validPosF2.mat');
+
+pt4 = geraResultsF2valid(imvec,1000,25,8,validPos);
+
+
+
+
+
+imvec = loadImages('Images/Photo3/Cortadas');
+
+load('validPosF3.mat');
+
+pt4 = geraResultsF3valid(imvec,1000,25,8,validPos);
+
+
+
+
+
+
+
+
 
 % 
-pt4 = geraResultsC2valid(imvec,50,7,1,validPos);
-pt4 = geraResultsC2valid(imvec,150,7,1,validPos);
-
-pt4 = geraResultsC2valid(imvec,400,7,1,validPos);
-pt4 = geraResultsC2valid(imvec,500,7,1,validPos);
-pt5 = geraResultsC2valid(imvec,700,7,1,validPos);  
-pt2 = geraResultsC2valid(imvec,900,7,1,validPos);
+% load('validPosC2.mat');
+% 
+% 
+% pt4 = geraResultsC2valid(imvec,50,7,1,validPos);
+% pt4 = geraResultsC2valid(imvec,150,7,1,validPos);
+% 
+% pt4 = geraResultsC2valid(imvec,400,7,1,validPos);
+% pt4 = geraResultsC2valid(imvec,500,7,1,validPos);
+% pt5 = geraResultsC2valid(imvec,700,7,1,validPos);  
+% pt2 = geraResultsC2valid(imvec,900,7,1,validPos);
 % 
 % 
 % pt4 = geraResultsC1valid(imvec,300,7,2,validPos);
