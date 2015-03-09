@@ -4,7 +4,7 @@ function [y2,e] = genPoli(x,vector,degree)
      p = polyfit(x',vector,degree);
      x2 = 0:.001:1;
      y2 = polyval(p,x2);
-     %plot(x,vector,'rd',x2,y2,'b-');
+     plot(x,vector,'rd',x2,y2,'b-');
      d = zeros(size(vector));
      length(y2);
     for i=1:length(x)

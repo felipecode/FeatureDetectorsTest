@@ -70,5 +70,6 @@ function matrix=drawStarPolygon(nSides,kernelSize)
     
     matrix = ~logical(matrix);
     matrix = imfill(matrix,'holes');
+    matrix = double(matrix);
 
 end

@@ -2557,8 +2557,9 @@ void KAZE::Save_Scale_Space() {
   for (size_t i = 0; i < evolution_.size(); i++) {
     convert_scale(evolution_[i].Lt);
     evolution_[i].Lt.convertTo(img_aux,CV_8U,255.0,0);
-    sprintf(outputFile,"../../output/images/nl_evolution_%02ld.jpg",i);
-    imwrite(outputFile,img_aux);
+    sprintf(outputFile,"../../output/images/nl_evolution_%02ld.bmp",i);
+    cv::imwrite(outputFile,img_aux);
+    
   }
 }
 
@@ -2575,7 +2576,7 @@ void KAZE::Save_Detector_Responses(void) {
   for (size_t i = 0; i < evolution_.size(); i++) {
     convert_scale(evolution_[i].Ldet);
     evolution_[i].Ldet.convertTo(img_aux,CV_8U,255.0,0);
-    sprintf(outputFile,"../../output/images/nl_detector_%02ld.jpg",i);
+    sprintf(outputFile,"../../output/images/nl_detector_%02ld.bmp",i);
     imwrite(outputFile,img_aux);
   }
 }

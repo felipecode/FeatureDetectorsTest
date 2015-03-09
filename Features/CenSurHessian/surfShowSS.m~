@@ -1,0 +1,13 @@
+function surfShowSS(img)
+
+    iimg=IntegralImage_IntegralImage(img);
+
+    % Extract the interest points
+    FastHessianData.thresh = 0.00000005;
+    FastHessianData.octaves = 5;
+    FastHessianData.init_sample = 2;
+    FastHessianData.img = iimg;
+
+    responseMap=FastHessian_buildResponseMap(FastHessianData);
+
+end

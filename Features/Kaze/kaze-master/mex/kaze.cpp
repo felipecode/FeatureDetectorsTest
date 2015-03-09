@@ -196,8 +196,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
   vector<cv::KeyPoint> kpts;
   t1 = cv::getTickCount();
   KAZE evolution(options);
+  
+  // Create scale space
   evolution.Create_Nonlinear_Scale_Space(img_32);
+  
+  // Save scale space
+  //evolution.Save_Scale_Space();
+  //std::cout << "OI OI OI\n";
+  
   evolution.Feature_Detection(kpts);
+  
+  
   t2 = cv::getTickCount();
   tdet = 1000.0*(t2-t1) / cv::getTickFrequency();
 

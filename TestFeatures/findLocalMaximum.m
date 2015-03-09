@@ -36,8 +36,8 @@ function [row,col,max_local] = findLocalMaximum(val,radius)
     nb    = sum(mask(:));
 %     nb
     highest          = ordfilt2(val, nb, mask);
-    %second_highest   = ordfilt2(val, nb-1, mask);
-    index            = highest==val; %& highest~=second_highest;
+    second_highest   = ordfilt2(val, nb-1, mask);
+    index            = highest==val & highest~=second_highest;
 %     figure
 %     highest;
 %     imshow(highest);

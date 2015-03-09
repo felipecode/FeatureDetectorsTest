@@ -13,8 +13,7 @@ function imvec = surfShowSS(img,nOctaves,imagesPerOctave)
     boxFilter = fspecial('average',boxSize);
     step=2;
     %imageFilter = conv2(boxFilter,img);
-    img = rgb2gray(img);
-    img = double(img)./255;
+
     
     imvec{nOctaves*imagesPerOctave} = 1;
     

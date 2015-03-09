@@ -31,7 +31,7 @@ function points = kp_harris(im,N,delta)
 
     % only luminance value
     im = double(im(:,:,1));
-    sigma = 1.5;
+    sigma = 2.8;
 
     % derivative masks
     s_D = 0.7*sigma;
@@ -53,16 +53,22 @@ function points = kp_harris(im,N,delta)
     % interest point response
     %cim = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps);				% Alison Noble measure.
      k = 0.06; cim = (Ix2.*Iy2 - Ixy.^2) - k*(Ix2 + Iy2).^2;	% Original Harris measure.
-
+%     cim((size(im,1)-15):size(im,1),:) = 0;
+%     cim(:,(size(im,2)-15):size(im,2)) = 0;
+%     cim(1:15,:) = 0;
+%     cim(:,1:15) = 0;
+    % figure;
+    % imshow(mat2gray(cim));
+     
     % find local maxima on 3x3 neighborgood
 
     [r,c,max_local] = findLocalMaximum(cim,delta);
 
     % set threshold 1% of the maximum value
-    %t = 0.000001*max(max_local(:));
+    %t = 0.0000000001*max(max_local(:));
    
     % find local maxima greater than threshold
-   % [rf,cf] = find(max_local>=t);
+    %[rf,cf] = find(max_local>=t);
     
     [sortedValues,sortIndex] = sort(max_local(:),'descend');  %# Sort the values in
 
@@ -77,7 +83,7 @@ function points = kp_harris(im,N,delta)
     for i=1:N        
         rf(i) = mod(maxIndex(i),size(im,1))+1;
         cf(i) = uint16(maxIndex(i)/size(im,1))+1;
-        
+       
     end
     
     %cf = zeros(50,1);

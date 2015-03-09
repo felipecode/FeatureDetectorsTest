@@ -54,5 +54,8 @@ function cim = harris_measure(im)
     %cim = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps);				% Alison Noble measure.
      k = 0.06; cim = (Ix2.*Iy2 - Ixy.^2) - k*(Ix2 + Iy2).^2;	% Original Harris measure.
 
-
+    cim((size(im,1)-15):size(im,1),:) = 0;
+    cim(:,(size(im,2)-15):size(im,2)) = 0;
+    cim(1:15,:) = 0;
+    cim(:,1:15) = 0;
 end

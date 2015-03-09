@@ -48,7 +48,7 @@ function matrix=drawStarPolygon(nSides,kernelSize)
     else
         factor = floor(nSides/2);
     end
-    factor
+
         
     for i=1:(nSides/2 +1)
        
@@ -70,5 +70,5 @@ function matrix=drawStarPolygon(nSides,kernelSize)
     
     matrix = ~logical(matrix);
     matrix = imfill(matrix,'holes');
-
+    matrix = double(matrix);
 end

@@ -1,50 +1,56 @@
-function [r c]=generateValid(imvec)
+function [r ,c]=generateValid(imvec,BinfVec,channel)
 
     %[A,I] = double(max(max(I)))./255;
     
-    rows = size(imvec{1},1)
-    cols = size(imvec{1},2)
+    rows = size(imvec{1},1);
+    cols = size(imvec{1},2);
     
-    Avec = [ ];
-    hsvec = {};
+    imvecss{length(imvec)} = 1;
+    binfvecss{length(imvec)} = 1;
     
     for i=1:length(imvec)
-        [H S hsvec{i} ] = rgb2hsv (imvec{i});
-        %hsvec{i} = double(hsvec{i});
-        Avec = [Avec max(max(hsvec{i}))];
+        image = imvec{i};
+        imvecss{i} = double(image(:,:,channel))/255;
+        image = BinfVec{i};
+        binfvecss{i} = double(image(:,:,channel))/255;        
+        binfvecss{i} = imresize( binfvecss{i}, size(imvecss{i}));        
     end
-    Avec
+
     r = [];
     c = [];
-    length(hsvec)
+    length(imvec)
     rows
     cols
     for i=1:rows
         for j=1:cols
 
             minT = 1;
-            for k=2:length(hsvec)
+            for k=2:length(imvec)
 
-                image = hsvec{k};
-                image1 = hsvec{1};
+                image = imvecss{k};
+                image1 = imvecss{1};
                 I = (image(i,j));
                 J = (image1(i,j));
-                B = I -Avec(k);
-                C = J- Avec(k);
-              
-                tmap = B/C;
+                binfimage = binfvecss{k};
+                B = I -binfimage(i,j);
+                C = J- binfimage(i,j);
+                if C~= 0
+                    tmap = B/C;
+                else
+                    tmap = -1;
+                end
                 %tmap
                 minT = min([tmap minT]);
 
             end
 
             if minT > 0
-               
+                
+                %minT
                 r = [r i];
                 c = [c j];
             end
             
-            %minT
             
         end
     end

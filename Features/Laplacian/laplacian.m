@@ -1,24 +1,37 @@
 function points=laplacian(im,N,delta)
     
-    im = double(im(:,:,1));
-    sigma=1.5;
-    s_D = 0.7*sigma;
-    x  = -round(3*s_D):round(3*s_D);
-    dx = x .* exp(-x.*x/(2*s_D*s_D)) ./ (s_D*s_D*s_D*sqrt(2*pi));
-    dy = dx';
+   im = double(im(:,:,1));
+% 
+       sigma = 1.2;
+       k=7;
+% 
+%     derivative masks
+%     s_D = 0.7*sigma;
+%     x  = -round(3*s_D):round(3*s_D);
+%     dxxmaskg = dxxmask .* exp(-dxxmask.*dxxmask/(2*s_D*s_D)) ./ (s_D*s_D*s_D*sqrt(2*pi));
+%     dy = dx';
 
-    Ix = conv2(im, dx, 'same');
-    Iy = conv2(im, dy, 'same');
-    Ixx =conv2(Ix, dx, 'same');
-    Iyy =conv2(Iy, dy, 'same');
-    Ixy = conv2(Ix, dy, 'same');
+    G1=fspecial('gauss',[round(k*sigma), round(k*sigma)], sigma);
+
+    [Gx,Gy] = gradient(G1);   
+    [Gxx,Gxy] = gradient(Gx);
+    [Gyx,Gyy] = gradient(Gy);
+
     
+  %  Ix = conv2(im, dx, 'valid');
+  %  Iy = conv2(im, dy, 'valid');
+    %Ix(Ix<0) = 0;
+    %Iy(Iy<0) = 0;
+     %   s_I = s_D;
+    %g = fspecial('gaussian',max(1,fix(6*s_I+1)), s_I);
+    %im =conv2(im, g, 'valid');
+    
+    
+    Ixx =conv2(im, Gxx, 'same');
+    Iyy =conv2(im, Gyy, 'same');
+
+
     % agora s� no smooth.
-    s_I = sigma;
-    g = fspecial('gaussian',max(1,fix(6*s_I+1)), s_I);
-    Ixx =conv2(Ixx, g, 'same');
-    Iyy =conv2(Iyy, g, 'same');
-    Ixy = conv2(Ixy, g, 'same');
    
 %     figure
 %     title('IX');
@@ -26,19 +39,25 @@ function points=laplacian(im,N,delta)
 %     figure
 %     title('Iy');
 %     imshow(Iy);
-%     figure
-%     title('Ixx');
-%     imshow(Ixx);
-%     figure
-%     title('Iyy');
-%     imshow(Iyy);
+     %figure
+     %title('Ixx');
+     %imshow(Ixx);
+     %figure
+     %title('Iyy');
+     %imshow(Iyy);
 %     figure
 %     title('Ixy');
 %     imshow(Ixy);
-    H = Ixx + Iyy; 
-%     figure
-%     title('Hessian');
-%     imshow(H);
+    H = abs(Ixx + Iyy); 
+    
+    C = 3*k;
+        H((size(im,1)-C):size(im,1),:) = 0;
+    H(:,(size(im,2)-C):size(im,2)) = 0;
+    H(1:C,:) = 0;
+    H(:,1:C) = 0;
+    % figure
+    % title('Hessian');
+    % imshow(H);
         % find local maxima on 3x3 neighborgood
     [r,c,max_local] = findLocalMaximum(H,delta);
 

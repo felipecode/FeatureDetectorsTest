@@ -1,0 +1,37 @@
+function idt = estimateIDT(J,I,Binf,valid)
+
+    % Set distance of the scene, for our experiment is always 0.58
+    distance = 0.58;
+    
+    % Take just the luminance
+    [H S I ] = rgb2hsv(I);
+    [H S J ] = rgb2hsv(J);
+    Binf = double(rgb2gray(Binf))/255;    
+    
+    Binf = imresize(Binf, size(I));
+    
+    
+    % Estimate turbid noise
+
+
+        
+    averageCossine = 0.7;
+    c = estimateC(J,I,distance,valid(:,1),valid(:,2),Binf);
+    fprintf('c = %f',c);
+    
+
+    % Binf estimation for now is just the max;
+ 
+    
+
+    % calculate the image with just the turbid noise
+    
+    T = calculateTurbidImage(J,c,distance,averageCossine,Binf); 
+    
+    
+    
+    
+    idt = 100 * floor((1- ssim_index(J,T))*10000)/10000
+
+
+end
