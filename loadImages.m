@@ -1,7 +1,12 @@
 function imvec = loadImages(path)
 
+<<<<<<< HEAD
 
     pngFiles = dir(strcat(path,'/*.jpg'));
+=======
+    cd(path)
+    pngFiles = dir('*.jpg');
+>>>>>>> fd31db4c6c653a74b8a452ac63522d4f505aea68
     %imvec = zeros(size()
     imvec{length(pngFiles)} = {};
     for k = 1:length(pngFiles)

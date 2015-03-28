@@ -10,18 +10,15 @@ function nRep = countFeatures(points1,points2,mov,imsize)
       figure;
       imshow(maskP1);
 
-      hold on;
-      
-      drawcircles(points1,'g',8);
+      hold on;      drawcircles(points1,'g',8);
       
       
 
       drawcircles(points2,'r',8);
       
-      hold off;
       
     for i=1:size(points1,1)
-        maskP1(uint16(points1(i,2))+1,uint16(points1(i,1))+1)=1;
+        maskP1(uint16(points1(i,1))+1,uint16(points1(i,2))+1)=1;
     end
     for i=1:size(points2,1)
         maskP2(uint16(points2(i,1))+1,uint16(points2(i,2))+1)=1;

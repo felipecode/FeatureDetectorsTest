@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 
 imvec = loadImages('Images/Photo1/Cortadas');
 
@@ -70,6 +71,43 @@ pt2 = geraKaze(imvec,1000,25,8,[],'F3');
 
 
 
+=======
+imvec = loadImages('Images/Photo1/Cortadas');
+
+load('validPosF1.mat');
+
+
+
+pt4 = geraResultsF1valid(imvec,1000,25,8,validPos);
+
+
+
+
+imvec = loadImages('Images/Photo2/Cortadas');
+
+load('validPosF2.mat');
+
+pt4 = geraResultsF2valid(imvec,1000,25,8,validPos);
+
+
+
+
+
+imvec = loadImages('Images/Photo3/Cortadas');
+
+load('validPosF3.mat');
+
+pt4 = geraResultsF3valid(imvec,1000,25,8,validPos);
+
+
+
+
+
+
+
+
+
+>>>>>>> fd31db4c6c653a74b8a452ac63522d4f505aea68
 % 
 % load('validPosC2.mat');
 % 

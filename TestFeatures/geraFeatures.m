@@ -1,3 +1,4 @@
+
 % This function generate the feature points for a choosen algorithm
 % Parameters
 
@@ -220,10 +221,17 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         points = points';
         im = uint8(im);
         
+        
+        
+        
         % Have to change the X by the y ! Yes. Crazy stuff
         aux=points(:,1);
         points(:,1) = points(:,2);
         points(:,2) = aux;
+        
+         points=removeBorderPoints(points,im);
+        
+        
         if length(points) > 5                
             
              points = hessiannms(im,points,N,delta);

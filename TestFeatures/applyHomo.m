@@ -1,0 +1,26 @@
+% apply a homogrphy considering the image already
+
+function hpoints = applyHomo(image,points,)
+
+
+
+    
+    
+    pointsImage = zeros(size(image));
+    for i=1:size(points,1)
+        pointsImage(uint32(points(i,1)),uint32(points(i,2)))=1;
+    end
+    
+    imrotate(pointsImage)
+    
+    classComp = bwconncomp(filterImage);
+
+     centers = regionprops(classComp, 'Centroid');
+     centroids2 = {centers.Centroid};
+                 
+    fpoints = cell2mat(centroids2');
+    
+    
+    
+
+end
