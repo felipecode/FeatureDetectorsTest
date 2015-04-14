@@ -89,7 +89,7 @@ FastHessianData.nSides = Options.nSides;
 FastHessianData.poly = Options.poly;
 FastHessianData.harrisThresh = Options.harrisThresh;
 FastHessianData.iimg = iimg;
-FastHessianData.img = double(img)/255;
+FastHessianData.img = double(img);
 ipts = CenSur_getIpoints(FastHessianData,Options.verbose);
 
 %fprintf(' Saida dos pontos \n');

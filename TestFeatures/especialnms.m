@@ -4,32 +4,22 @@
 % params: @radius the radius of the non maximal suprresion
 
 
-function pointsNMS = especialnms(im,points,N,radius) 
+function pointsNMS = especialnms(im,points,N,radius,measure) 
     
 
      maskSi = zeros(size(im));
 
 
     
-    addpath Misc/gbvs
-    
-    salMap = gbvs(im);
+
   
     
     for i=1:size(points,1)
-        maskSi(uint32(points(i,1)),uint32(points(i,2)))=salMap.master_map_resized(uint32(points(i,1)),uint32(points(i,2)));
+        maskSi(uint32(points(i,1)),uint32(points(i,2)))=measure(i);
     end
     
     %size(points(4,:,:))
-    
-    % Gambiarra aqui mas bem de leve. Eh pra fazer uma outra funcao
-    % funcionar. Mas nada que comprometa
-    
-    gauss = fspecial('gaussian',15)>0;
-    gauss2 = fspecial('gaussian',15,1.5);
-    gauss2 = conv2(double(gauss),gauss2,'same');
 
-    
     
     %figure; 
     %imshow(gauss2);
@@ -37,7 +27,7 @@ function pointsNMS = especialnms(im,points,N,radius)
     
     %maskSiS = salMap.master_map_resized.*maskSi;
     
-    maskSiS = conv2(maskSi,gauss2,'same');
+    maskSiS = maskSi;
     % figure
     % imshow(maskSiS);
 %     
@@ -68,4 +58,3 @@ function pointsNMS = especialnms(im,points,N,radius)
     end
     pointsNMS = [rf cf];
     
-    rmpath Misc/gbvs

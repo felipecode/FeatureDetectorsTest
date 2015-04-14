@@ -29,7 +29,7 @@ function [row,col,max_local] = findLocalMaximum(val,radius)
 %     [row,col] = find(index==1);
 %     max_local = zeros(size(val));
 %     max_local(index) = val(index);
-
+    
 
     % FIND UNIQUE LOCAL MAXIMA USING FILTERING (FAST)
     mask  = fspecial('disk',radius)>0;
@@ -38,13 +38,13 @@ function [row,col,max_local] = findLocalMaximum(val,radius)
     highest          = ordfilt2(val, nb, mask);
     second_highest   = ordfilt2(val, nb-1, mask);
     index            = highest==val & highest~=second_highest;
-%     figure
-%     highest;
-%     imshow(highest);
-%     figure
-%     imshow(second_highest);
-%     figure
-%     imshow(index);
+%    figure
+ %   highest;
+ %   imshow(highest);
+ %   figure
+ %   imshow(second_highest);
+ %   figure
+ %   imshow(index);
     
 
     max_local        = zeros(size(val));

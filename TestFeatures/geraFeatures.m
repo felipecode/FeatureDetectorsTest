@@ -7,12 +7,12 @@
 %
 
 
-function qFeatures=geraFeatures(im,algoritmo,N,delta)
+function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
 
 
     points = zeros(3);
     if strcmp(algoritmo,'harris')
-        addpath Harris
+        %addpath Harris
         %im = rgb2gray(im);
         
         points=kp_harris(im,N,delta); 
@@ -27,35 +27,34 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         rmpath Harris
 
    elseif strcmp(algoritmo,'kazeg1')
-        addpath Kaze
+        %addpath Kaze
         %im = rgb2gray(im);
-
-        points = kaze(im,'dthreshold',0.00005,'diffusivity',0);
-         points=uint32(points);
+        im=uint8(im*255);
+        points = kaze(im,'dthreshold',0,'diffusivity',0,'soffset',1.6,'turbidity',turb,'verbose',3);
+        
                
          % Have to change the X by the y ! Yes. Crazy stuff
         aux=points(:,1);
         points(:,1) = points(:,2);
         points(:,2) = aux;               
                 
-
+        length(points)
          
          if length(points) > 5
-            
-             points = hessiannms(im,points,N,delta);
+            points =especialnms(im,points,N,delta,points(:,3));
          end
-        %imshow(im);
-        %hold on
-        %drawcircles(points);
-        %hold off 
+       % imshow(im);
+       % hold on
+       % drawcircles(points);
+       % hold off 
 
-        rmpath Kaze
+        %rmpath Kaze
         
      elseif strcmp(algoritmo,'kazeg2')
         addpath Kaze
-        %im = rgb2gray(im);
+        im = rgb2gray(im);
 
-        points = kaze(im,'dthreshold',0.00005,'diffusivity',1);
+        points = kaze(im,'dthreshold',0.0000005,'diffusivity',1);
          points=uint32(points);
                
          % Have to change the X by the y ! Yes. Crazy stuff
@@ -64,10 +63,9 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         points(:,2) = aux;               
                 
 
-         
+          
          if length(points) > 5
-            
-             points = hessiannms(im,points,N,delta);
+            points =especialnms(im,points,N,delta,points(:,3));
          end
         %imshow(im);
         %hold on
@@ -77,7 +75,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         rmpath Kaze
      elseif strcmp(algoritmo,'kazeg3')
         addpath Kaze
-       % im = rgb2gray(im);
+        im = rgb2gray(im);
 
         points = kaze(im,'dthreshold',0.00005,'diffusivity',2);
          points=uint32(points);
@@ -89,9 +87,9 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
                 
 
          
+  
          if length(points) > 5
-            
-             points = hessiannms(im,points,N,delta);
+            points =especialnms(im,points,N,delta,points(:,3));
          end
         %imshow(im);
         %hold on
@@ -103,12 +101,23 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
     elseif strcmp(algoritmo,'censtar')
 
       %  imout = rgb2gray(im);
-        Options=struct('tresh',0.0000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',0,'harrisThresh',0.000001);
-        points = CenSur(im',Options);
+        Options=struct('tresh',0.000000000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',0,'harrisThresh',1);
+        pointsStruct = CenSur(im',Options);
         
+         for i=1:size(pointsStruct,2)
+            points(i,1) = pointsStruct(1,i).x;
+            points(i,2) = pointsStruct(1,i).y;
+            points(i,4) = pointsStruct(1,i).response;
+         end
+        
+         
+       %   figure;
+       % imshow(im);
+      %  hold on
+       % drawcircles(points)
         length(points)
         if length(points) > 5
-            points = harrisnms(im,points,N,delta);
+            points = especialnms(im,points,N,delta,points(:,4));
         end
         %points = points';
         %if length(points) > 5
@@ -124,13 +133,27 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
 
     elseif strcmp(algoritmo,'cenpoly')
 
-        %imout = rgb2gray(im);
-        Options=struct('tresh',0.0000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',1,'harrisThresh',0.000001);
-        points = CenSur(im',Options);
+       % im = rgb2gray(im);
+        Options=struct('tresh',0.000000000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',1,'harrisThresh',1);
+        pointsStruct = CenSur(im',Options);
         
-        length(points)
+         for i=1:size(pointsStruct,2)
+            points(i,1) = pointsStruct(1,i).x;
+            points(i,2) = pointsStruct(1,i).y;
+            points(i,4) = pointsStruct(1,i).response;
+         end
+        
+         
+%          figure;
+%        imshow(im);
+%        hold on
+%        drawcircles(points)
+%         length(points)
+        
+        points=removeBorderPoints(points,im);
+        
         if length(points) > 5
-            points = harrisnms(im,points,N,delta);
+            points = especialnms(im,points,N,delta,points(:,4));
         end
         %points = points';
         %if length(points) > 5
@@ -139,20 +162,31 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
 %         points=int32(points);
 %         points=points';
 %         points = especialnms(im,points,N,delta);
-        %figure;
-        %imshow(im);
-        %hold on
-        %drawcircles(points)
+%        figure;
+%        imshow(im);
+%        hold on
+%        drawcircles(points)
 
      elseif strcmp(algoritmo,'censurehes')
         
        % imout = rgb2gray(im);
-        Options=struct('tresh',0.0000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',1,'harrisThresh',0.000001);
-        points = CenSurHessian(im',Options);
+           Options=struct('tresh',0.0000000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',1,'harrisThresh',1);
+        pointsStruct = CenSurHessian(im',Options);
         
+         for i=1:size(pointsStruct,2)
+            points(i,1) = pointsStruct(1,i).x;
+            points(i,2) = pointsStruct(1,i).y;
+            points(i,4) = pointsStruct(1,i).response;
+         end
+        
+         
+       %   figure;
+       % imshow(im);
+      %  hold on
+       % drawcircles(points)
         length(points)
         if length(points) > 5
-            points = hessiannms(im,points,N,delta);
+            points = especialnms(im,points,N,delta,points(:,4));
         end
         %points = points';
         %if length(points) > 5
@@ -169,7 +203,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         
         
     elseif strcmp(algoritmo,'hessian')
-        addpath Hessian
+        %addpath Hessian
         %im = rgb2gray(im);
         points = Hessian(im,N,delta);
         
@@ -180,7 +214,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         %imshow(im);
         %hold on
         %drawcircles(points)
-        rmpath Hessian
+        %rmpath Hessian
    elseif strcmp(algoritmo,'hessianbug')
         addpath Hessian
         %im = rgb2gray(im);
@@ -212,12 +246,12 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
     elseif strcmp(algoritmo,'sift')
         
 
-        %im = rgb2gray(im);
+%        im = rgb2gray(im);
 
         
         %im(950,950) = 0;
         im= single(im);
-        points = vl_sift(im);
+        [points d info] = vl_sift(im);
         points = points';
         im = uint8(im);
         
@@ -229,66 +263,107 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta)
         points(:,1) = points(:,2);
         points(:,2) = aux;
         
-         points=removeBorderPoints(points,im);
-        
+        % points=removeBorderPoints(points,im);
+        length(points)
         
         if length(points) > 5                
             
-             points = hessiannms(im,points,N,delta);
+             points = especialnms(im,points,N,delta,info.edgeScores);
          end
 
 
     elseif strcmp(algoritmo,'surf')
-        addpath Surf  
+        %addpath Surf  
         
-        %imout = rgb2gray(im);
+        %im = rgb2gray(im);
+%         pointsStruct = OpenSurf(im');
         pointsStruct = OpenSurf(im');
-        
         for i=1:size(pointsStruct,2)
             points(i,1) = pointsStruct(1,i).x;
             points(i,2) = pointsStruct(1,i).y;
             points(i,4) = pointsStruct(1,i).response;
         end
         %points = points';
-         
-         if length(points) > 5
-            
-             points = hessiannms(im,points,N,delta);
-         end
         
         %figure;
         %imshow(im);
         %hold on
         %drawcircles(points);
         %hold off
-        rmpath Surf
+        %points=removeBorderPoints(points,im);
+         length(points)
+         if length(points) > 5
+            
+             points = especialnms(im,points,N,delta,points(:,4));
+         end
+        
+        %%figure;
+        %imshow(im);
+        %hold on
+        %drawcircles(points);
+        %hold off
+        %srmpath Surf
     elseif strcmp(algoritmo,'hessianlap')
-        addpath HessianLaplace
+        %addpath HessianLaplace
         %im = rgb2gray(im);
         points=hessianlaplace(im); 
-        rmpath HessianLaplace
-        points = especialnms(im,points,N,delta);
-         %figure
-         %imshow(im);
-         %hold on
-         %drawcircles(points)
+        %rmpath HessianLaplace
+        if length(points) > 5
+            points = especialnms(im,points(:,1:2),N,delta,points(:,4));
+        end
+       %  figure
+        % imshow(im);
+        % hold on
+        % drawcircles(points)
        
         
     elseif strcmp(algoritmo,'harrislap')
-        addpath HarrisLaplace
+       % addpath HarrisLaplace
         %im = rgb2gray(im);
         points=kp_harrislaplace(im); 
         %fprintf('Points');
-        %size(points)
-        rmpath HarrisLaplace
-        points = especialnms(im,points,N,delta);
+        size(points)
+       % rmpath HarrisLaplace
+        %points = especialnms(im,points,N,delta);
+        
+        if length(points) > 5
+            points = especialnms(im,points(:,1:2),N,delta,points(:,4));
+        end
          %figure
          %imshow(im);
          %hold on
          %drawcircles(points)
         
-
-        
+%      elseif strcmp(algoritmo,'harrislap2')
+%         
+%         im = rgb2gray(im);
+%         im= single(im);
+%         [points d info] =vl_covdet(im,'Method','HarrisLaplace');
+%         
+%       
+%         %fprintf('Points');
+%         %size(points)
+%         points = points';
+%         im = uint8(im);
+%         %aux=points(:,1);
+%         %points(:,1) = points(:,2);
+%         %points(:,2) = aux;
+%         
+%         length(points)
+% %          figure
+% %          imshow(im);
+% %          hold on
+% %          drawcircles(points)
+%          
+%         if length(points) > 5            
+%              points = especialnms(im,points(:,1:2),N,delta,info.edgeScores);
+%          end
+% %          figure
+% %          imshow(im);
+% %          hold on
+% %          drawcircles(points)
+% 
+%         
     elseif strcmp(algoritmo,'harriscolor')
         addpath ColorHarris
         [EnIm]= ColorHarris(im,1.5,5,0.04,1);

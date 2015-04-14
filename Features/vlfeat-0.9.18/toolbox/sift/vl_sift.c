@@ -400,7 +400,7 @@ mexFunction(int nout, mxArray *out[],
           /* make enough room for all these keypoints and more */
           if (reserved < nframes + 1) {
             reserved += 2 * nkeys ;
-            frames = mxRealloc (frames, 4 * sizeof(double) * reserved) ;
+            frames = mxRealloc (frames, 5 * sizeof(double) * reserved) ;
             if (nout > 1) {
               if (! floatDescriptors) {
                 descr  = mxRealloc (descr,  128 * sizeof(vl_uint8) * reserved) ;
@@ -416,6 +416,7 @@ mexFunction(int nout, mxArray *out[],
           frames [4 * nframes + 1] = k -> x + 1 ;
           frames [4 * nframes + 2] = k -> sigma ;
           frames [4 * nframes + 3] = VL_PI / 2 - angles [q] ;
+          frames [4 * nframes + 4] = k -> score ;
 
           if (nout > 1) {
             if (! floatDescriptors) {

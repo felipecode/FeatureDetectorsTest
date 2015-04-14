@@ -11,10 +11,10 @@
 %yf = 2427;
 
 % Photo 1
-%xi = 242;
-%xf = 3777;
-%yi= 375;
-%yf = 2656;
+xi = 242;
+xf = 3777;
+yi= 375;
+yf = 2656;
 
 % center 1779/1125
 
@@ -52,8 +52,10 @@ for i=1:size(imvec,2)
     %imshow(double(imcut)/255);
     
 
-    imcut = bfilter2(double(imcut)/255,5,[3 0.1]);
+    %imcut = bfilter2(double(imcut)/255,5,[3 0.1]);
+    i=13;
     
-    imwrite(imcut,strcat('Images/Photo3/Cortadas/',sprintf('%d.jpg',i)));
+    imwrite(imcut,strcat('Images/Photo1/Cortadas/',sprintf('%d.jpg',i)));
+    
 
 end

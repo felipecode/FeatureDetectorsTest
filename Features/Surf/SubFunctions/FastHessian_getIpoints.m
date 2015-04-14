@@ -31,7 +31,6 @@ for o = 1:FastHessianData.octaves
         end
     end
 end
-ipts
 
 % Show laplacian and response maps with found interest-points
 if(verbose)

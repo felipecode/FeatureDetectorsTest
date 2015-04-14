@@ -27,7 +27,7 @@ function points = hessianlaplace(img)
     img_width   = size(img,2);
 
     % SCALE PARAMETERS
-    sigma_begin = 1.5;
+    sigma_begin = 1.8;
     sigma_step  = 1.2;
     sigma_nb    = 13;
     sigma_array = (sigma_step.^(0:sigma_nb-1))*sigma_begin
@@ -39,41 +39,57 @@ function points = hessianlaplace(img)
 
         % scale (standard deviation)
         s_I = sigma_array(i);   % int�gration scale
-        s_D = 0.7*s_I;          % derivative scale %0.7
+        %s_D = 0.7*s_I;          % derivative scale %0.7
 
-        % derivative mask
-        x  = -round(3*s_D):round(3*s_D);
-        dx = x .* exp(-x.*x/(2*s_D*s_D)) ./ (s_D*s_D*s_D*sqrt(2*pi));
-        dy = dx';
+        
+        k=7;
+    % 
+    %     derivative masks
+    %     s_D = 0.7*sigma;
+    %     x  = -round(3*s_D):round(3*s_D);
+    %     dxxmaskg = dxxmask .* exp(-dxxmask.*dxxmask/(2*s_D*s_D)) ./ (s_D*s_D*s_D*sqrt(2*pi));
+    %     dy = dx';
 
-        % image derivatives
-        Ix = conv2(img, dx, 'valid');
-        Iy = conv2(img, dy, 'valid');
-        
-        Ixx =conv2(Ix, dx, 'valid');
-        Iyy =conv2(Iy, dy, 'valid');
-        Ixy = conv2(Ix, dy, 'valid');
-        
-        % Hessian matrix
-        g = fspecial('gaussian',max(1,fix(6*s_I+1)), s_I);
-        Ixx =conv2(Ixx, g, 'valid');
-        Iyy =conv2(Iyy, g, 'valid');
-        Ixy = conv2(Ixy, g, 'valid');
-        
+        G1=fspecial('gauss',[round(k*s_I), round(k*s_I)], s_I);
+
+        [Gx,Gy] = gradient(G1);   
+        [Gxx,Gxy] = gradient(Gx);
+        [Gyx,Gyy] = gradient(Gy);
+
+
+      %  Ix = conv2(im, dx, 'valid');
+      %  Iy = conv2(im, dy, 'valid');
+        %Ix(Ix<0) = 0;
+        %Iy(Iy<0) = 0;
+         %   s_I = s_D;
+        %g = fspecial('gaussian',max(1,fix(6*s_I+1)), s_I);
+        %im =conv2(im, g, 'valid');
+
+
+        Ixx =conv2(img, Gxx, 'same');
+        Iyy =conv2(img, Gyy, 'same');
+        Ixy = conv2(img, Gxy, 'same');
+    
+    
+    
+
         %resizing filters
         
-        Ixx(size(img,1),size(img,2)) = 0;
-        Iyy(size(img,1),size(img,2)) = 0;
-        Ixy(size(img,1),size(img,2)) = 0;
+        %Ixx(size(img,1),size(img,2)) = 0;
+        %Iyy(size(img,1),size(img,2)) = 0;
+        %Ixy(size(img,1),size(img,2)) = 0;
         
-        H = Ixx.*Iyy - Ixy.*Ixy;
-
+        H = (Ixx.*Iyy - 0.81*(Ixy.*Ixy));
+        H((size(img,1)-15):size(img,1),:) = 0;
+        H(:,(size(img,2)-15):size(img,2)) = 0;
+        H(1:15,:) = 0;
+        H(:,1:15) = 0;
         
         % find local maxima on neighborgood
-        [l,c,max_local] = findLocalMaximum(H,3);%3*s_I
+        [l,c,max_local] = findLocalMaximum(H,1);%3*s_I
 
         % set threshold 1% of the maximum value
-        t = 0.00000001*max(max_local(:));
+        t = 0.0001*max(max_local(:));
 
         % find local maxima greater than threshold
         [l,c] = find(max_local>=t);
@@ -83,11 +99,9 @@ function points = hessianlaplace(img)
         
         hessian_pts(end+1:end+n,:) = [l,c,repmat(i,[n,1]),res];
         
-        %'Harris Points'
-        %size(harris_pts,1)
-        %size(harris_pts,2)
+       
 
-        hessian_pts(1,3)
+        %hessian_pts(1,3)
     end
     
 

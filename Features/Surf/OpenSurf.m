@@ -65,7 +65,7 @@ functiondir=functiondir(1:end-length(functionname));
 addpath([functiondir '/SubFunctions'])
        
 % Process inputs
-defaultoptions=struct('tresh',0.00000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false);
+defaultoptions=struct('tresh',0.0000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false);
 if(~exist('Options','var')), 
     Options=defaultoptions; 
 else

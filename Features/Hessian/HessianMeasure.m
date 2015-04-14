@@ -2,7 +2,7 @@ function H=HessianMeasure(im)
     
      im = double(im(:,:,1));
 % 
-       sigma = 1.2;
+       sigma = 1.8;
        k=7;
 % 
 %     derivative masks
@@ -58,7 +58,7 @@ function H=HessianMeasure(im)
 
 
     
-    H = abs(Ixx.*Iyy - (Ixy.*Ixy));
+    H = abs(Ixx.*Iyy - 0.81*(Ixy.*Ixy));
     H((size(im,1)-15):size(im,1),:) = 0;
     H(:,(size(im,2)-15):size(im,2)) = 0;
     H(1:15,:) = 0;

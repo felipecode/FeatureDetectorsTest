@@ -96,6 +96,11 @@ int parse_input_options(KAZEOptions& options, int nrhs, const mxArray *prhs[]) {
         options.soffset = mxGetScalar(prhs[i+1]);
         continue;
       }
+      
+      if (!strcmp(param_name, "turbidity")) {
+        options.turbidity = mxGetScalar(prhs[i+1]);
+        continue;
+      }
 
       if (!strcmp(param_name, "omax")) {
         options.omax = mxGetScalar(prhs[i+1]);
@@ -212,12 +217,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
 
   if (nlhs > 0) {
 
-    plhs[0] = mxCreateDoubleMatrix(kpts.size(), 2, mxREAL);
+    plhs[0] = mxCreateDoubleMatrix(kpts.size(), 3, mxREAL);
     double* pts_ptr = mxGetPr(plhs[0]);
     for (int i = 0 ; i < kpts.size() ; i++) {
       // Swap x,y back to get original coordinates
       pts_ptr[i] = kpts[i].pt.y;
       pts_ptr[kpts.size()+i] = kpts[i].pt.x;
+      pts_ptr[kpts.size()*2+i] = kpts[i].response;
     }
   }
 

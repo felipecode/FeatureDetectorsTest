@@ -49,7 +49,8 @@ CenResp = sResp - cResp;
 
 % Take also the harris responses for each pixel. This will be tested
 % if it is below a certain threshold
-sigma = 1.5;
+sigma = 1.8;
+
  s_D = 0.7*sigma;
  x  = -round((2*rl.filter +1)*s_D):round((2*rl.filter +1)*s_D);
  dx = x .* exp(-x.*x/(2*s_D*s_D)) ./ (s_D*s_D*s_D*sqrt(2*pi));
@@ -68,12 +69,18 @@ sigma = 1.5;
     Iy2 = conv2(Iy.^2, g, 'same');
     Ixy = conv2(Ix.*Iy, g, 'same');
 
+%     Ix2 =Ix.^2; % Smoothed squared image derivatives
+%     Iy2 = Iy.^2;
+%     Ixy = Ix.*Iy;
 
     % interest point response
     
      k = 0.06; cim = (Ix2.*Iy2 - Ixy.^2) - k*(Ix2 + Iy2).^2;	% Original Harris measure.
     
-
+    cim((size(cResp,1)-15):size(cResp,1),:) = 0;
+    cim(:,(size(cResp,2)-15):size(cResp,2)) = 0;
+    cim(1:15,:) = 0;
+    cim(:,1:15) = 0;
      
 CenResp = CenResp*inverse_area;
 

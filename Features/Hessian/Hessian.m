@@ -3,8 +3,9 @@ function points=Hessian(im,N,delta)
    % im = double(im(:,:,1));
    im = double(im(:,:,1));
 % 
-       sigma = 1.2;
+       sigma = 1.8;
        k=7;
+       borderless= k*sigma;
 % 
 %     derivative masks
 %     s_D = 0.7*sigma;
@@ -60,10 +61,10 @@ function points=Hessian(im,N,delta)
     
     
     H = (Ixx.*Iyy - (Ixy.*Ixy));
-%     H((size(im,1)-15):size(im,1),:) = 0;
-%     H(:,(size(im,2)-15):size(im,2)) = 0;
-%     H(1:15,:) = 0;
-%     H(:,1:15) = 0;
+    H((size(im,1)-borderless):size(im,1),:) = 0;
+    H(:,(size(im,2)-borderless):size(im,2)) = 0;
+    H(1:borderless,:) = 0;
+    H(:,1:borderless) = 0;
     %figure;
     %title('Hessian');
     %imshow(mat2gray(H));
@@ -71,30 +72,30 @@ function points=Hessian(im,N,delta)
     [r,c,max_local] = findLocalMaximum(H,delta);
 
     % set threshold 1% of the maximum value
-    t = 0.01*max(max_local(:));
+    %t = 0.01*max(max_local(:));
     
     % find local maxima greater than threshold
-    [rf,cf] = find(max_local>=t);
+    %[rf,cf] = find(max_local>=t);
 
-%     [sortedValues,sortIndex] = sort(max_local(:),'descend');  %# Sort the values in
+     [sortedValues,sortIndex] = sort(max_local(:),'descend');  %# Sort the values in
     
     %sortedValues(1:50)
     %sortIndex'
     %size(sortIndex)
-%     maxIndex = sortIndex(1:N);
+    maxIndex = sortIndex(1:N);
     %size(maxIndex)s
     %size(max_local)
-    %rf = zeros(N,1);
-    %cf = zeros(N,1);
+    rf = zeros(N,1);
+    cf = zeros(N,1);
     
     %maxIndex
     %size(r)
     %size(c)
-    %for i=1:N        
-    %    rf(i) = mod(maxIndex(i),size(im,1))+1;
-    %    cf(i) = uint16(maxIndex(i)/size(im,1));
+    for i=1:N        
+        rf(i) = mod(maxIndex(i),size(im,1))+1;
+        cf(i) = uint16(maxIndex(i)/size(im,1));
         
-    %end
+    end
     
     
 

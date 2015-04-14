@@ -7,7 +7,7 @@ filter_map = [0,1,2,3;
     5,7,8,9;
     7,9,10,11]+1;
 
-np=0; ipts=[];
+np=0; ipts=struct;
 
 % Build the response map
 responseMap=CenSur_buildResponseMap(FastHessianData);
@@ -26,16 +26,16 @@ for o = 1:FastHessianData.octaves
         [c,r]=ndgrid(0:t.width-1,0:t.height-1);
         r=r(:); c=c(:);
         p =find(CenSur_isExtremum(r, c, t, m, b,FastHessianData));
-        ipts= [ipts ; [ c(p) r(p)]];
+        %ipts= [ipts ; [ c(p) r(p)]];
         
-        np = np + size(p,1);
+        %np = np + size(p,1);
         
         %'size p'
         %size(p)
-        %for j=1:length(p);
-        %    ind=p(j);
-        %    [ipts,np]=CenSur_interpolateExtremum(r(ind), c(ind), t, m, b, ipts,np);
-        %end
+        for j=1:length(p);
+           ind=p(j);
+           [ipts,np]=CenSur_interpolateExtremum(r(ind), c(ind), t, m, b, ipts,np);
+        end
     end
 end
 

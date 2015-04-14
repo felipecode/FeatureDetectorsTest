@@ -27,7 +27,7 @@ function points = kp_harrislaplace(img)
     img_width   = size(img,2);
 
     % SCALE PARAMETERS
-    sigma_begin = 1.5;
+    sigma_begin = 1.8;
     sigma_step  = 1.2;
     sigma_nb    = 13;
     sigma_array = (sigma_step.^(0:sigma_nb-1))*sigma_begin
@@ -59,12 +59,16 @@ function points = kp_harrislaplace(img)
         % interest point response
         %cim = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps);				% Alison Noble measure.
         k = 0.06; cim = (Ix2.*Iy2 - Ixy.^2) - k*(Ix2 + Iy2).^2;	% Original Harris measure.
-        
+        cim((size(img,1)-15):size(img,1),:) = 0;
+        cim(:,(size(img,2)-15):size(img,2)) = 0;
+        cim(1:15,:) = 0;
+        cim(:,1:15) = 0;
+
         % find local maxima on neighborgood
         [l,c,max_local] = findLocalMaximum(cim,3);%3*s_I
 
         % set threshold 1% of the maximum value
-        t = 0.000000001*max(max_local(:));
+        t = 0.000001*max(max_local(:));
 
         % find local maxima greater than threshold
         % Also make the find to search for the value of the function

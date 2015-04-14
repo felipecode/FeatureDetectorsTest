@@ -31,7 +31,7 @@ function points = kp_harris(im,N,delta)
 
     % only luminance value
     im = double(im(:,:,1));
-    sigma = 2.8;
+    sigma = 1.8;
 
     % derivative masks
     s_D = 0.7*sigma;
@@ -53,10 +53,10 @@ function points = kp_harris(im,N,delta)
     % interest point response
     %cim = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps);				% Alison Noble measure.
      k = 0.06; cim = (Ix2.*Iy2 - Ixy.^2) - k*(Ix2 + Iy2).^2;	% Original Harris measure.
-%     cim((size(im,1)-15):size(im,1),:) = 0;
-%     cim(:,(size(im,2)-15):size(im,2)) = 0;
-%     cim(1:15,:) = 0;
-%     cim(:,1:15) = 0;
+    cim((size(im,1)-15):size(im,1),:) = 0;
+    cim(:,(size(im,2)-15):size(im,2)) = 0;
+    cim(1:15,:) = 0;
+    cim(:,1:15) = 0;
     % figure;
     % imshow(mat2gray(cim));
      

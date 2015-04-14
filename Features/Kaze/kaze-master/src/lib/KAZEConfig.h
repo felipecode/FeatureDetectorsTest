@@ -67,6 +67,7 @@ struct KAZEOptions {
     save_scale_space = false;
     save_keypoints = false;
     verbosity = false;
+    turbidity = 20;
   }
 
   float soffset;
@@ -82,6 +83,8 @@ struct KAZEOptions {
   float sderivatives;
   float dthreshold;
   bool use_fed;
+  
+  float turbidity;
 
   DESCRIPTOR_TYPE descriptor;
 

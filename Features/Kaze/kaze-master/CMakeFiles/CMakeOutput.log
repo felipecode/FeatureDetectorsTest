@@ -630,3 +630,53 @@ int main() {
 #endif
 }
 
+Performing C SOURCE FILE Test OpenMP_FLAG_DETECTED succeded with the following output:
+Change Dir: /home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec4234690746/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4234690746.dir/build.make CMakeFiles/cmTryCompileExec4234690746.dir/build
+make[1]: Entering directory `/home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4234690746.dir/src.c.o
+/usr/bin/cc   -DOpenMP_FLAG_DETECTED -fopenmp   -o CMakeFiles/cmTryCompileExec4234690746.dir/src.c.o   -c /home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTryCompileExec4234690746
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4234690746.dir/link.txt --verbose=1
+/usr/bin/cc   -DOpenMP_FLAG_DETECTED -fopenmp    CMakeFiles/cmTryCompileExec4234690746.dir/src.c.o  -o cmTryCompileExec4234690746 -rdynamic 
+make[1]: Leaving directory `/home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp'
+
+Source file was:
+
+#include <omp.h>
+int main() {
+#ifdef _OPENMP
+  return 0;
+#else
+  breaks_on_purpose
+#endif
+}
+
+Performing C++ SOURCE FILE Test OpenMP_FLAG_DETECTED succeded with the following output:
+Change Dir: /home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec4284050002/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4284050002.dir/build.make CMakeFiles/cmTryCompileExec4284050002.dir/build
+make[1]: Entering directory `/home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec4284050002.dir/src.cxx.o
+/usr/bin/c++    -DOpenMP_FLAG_DETECTED -fopenmp   -o CMakeFiles/cmTryCompileExec4284050002.dir/src.cxx.o -c /home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTryCompileExec4284050002
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4284050002.dir/link.txt --verbose=1
+/usr/bin/c++    -DOpenMP_FLAG_DETECTED -fopenmp    CMakeFiles/cmTryCompileExec4284050002.dir/src.cxx.o  -o cmTryCompileExec4284050002 -rdynamic 
+make[1]: Leaving directory `/home/nautec/FeatureDetectorsTest/Features/Kaze/kaze-master/CMakeFiles/CMakeTmp'
+
+Source file was:
+
+#include <omp.h>
+int main() {
+#ifdef _OPENMP
+  return 0;
+#else
+  breaks_on_purpose
+#endif
+}
+

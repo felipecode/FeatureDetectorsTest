@@ -25,9 +25,9 @@ function pointsNMS = harrisnms(im,points,N,radius)
     % Gambiarra aqui mas bem de leve. Eh pra fazer uma outra funcao
     % funcionar. Mas nada que comprometa
     
-    gauss = fspecial('gaussian',radius)>0;
-    gauss2 = fspecial('gaussian',15.0,1.5);
-    gauss2 = conv2(double(gauss),gauss2,'same');
+   % gauss = fspecial('gaussian',radius)>0;
+   % gauss2 = fspecial('gaussian',15.0,1.5);
+   % gauss2 = conv2(double(gauss),gauss2,'same');
 
     
     
@@ -37,12 +37,13 @@ function pointsNMS = harrisnms(im,points,N,radius)
     
     %maskSiS = salMap.master_map_resized.*maskSi;
     
-    maskSiS = conv2(maskSi,gauss2,'same');
+  %  maskSiS = conv2(maskSi,gauss2,'same');
+    maskSiS = maskSi;
      %figure
    %  imshow(maskSiS);
 %     
     [r,c,max_local] = findLocalMaximum(maskSiS,radius);
-    length(r)
+    %length(r)
     
     
     if(N > length(r))

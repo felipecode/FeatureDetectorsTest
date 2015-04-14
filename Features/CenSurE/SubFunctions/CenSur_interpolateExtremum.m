@@ -44,7 +44,7 @@ if (abs(O(1)) < 0.5 && abs(O(2)) < 0.5 && abs(O(3)) < 0.5)
     ipts(np).y = double(((r + O(2))) * t.step);
     ipts(np).scale = double(((2/15) * (m.filter + O(3) * filterStep)));
     ipts(np).laplacian = fix(FastHessian_getLaplacian(m,r,c,t));
-    ipts(np).response = FastHessian_getResponse(b,r+ O(2), c+ O(1),t);
+    ipts(np).response = CenSur_getHarrisResponse(b,r+ O(2), c+ O(1),t);
     
 end
   
@@ -73,3 +73,12 @@ H(2, 3) = dys;
 H(3, 1) = dxs;
 H(3, 2) = dys;
 H(3, 3) = dss;
+
+function an=CenSur_getHarrisResponse(a,row, column,b)
+scale=fix(a.width/b.width);
+% Clamp to boundary 
+% (The orignal C# code, doesn't contain this boundary clamp because if you 
+% process one coordinate at the time you already returned on the boundary check)
+index=fix(scale*row) * a.width + fix(scale*column)+1;
+index(index<1)=1; index(index>length(a.responses))=length(a.responses);
+an=a.harrisResponses(index);

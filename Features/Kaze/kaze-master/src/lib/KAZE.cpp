@@ -211,6 +211,10 @@ void KAZE::Compute_KContrast(const cv::Mat& img) {
   options_.kcontrast = compute_k_percentile(img,options_.kcontrast_percentile,
                                             options_.sderivatives,options_.kcontrast_nbins,0,0);
 
+    cout << "kcontrast = " << options_.kcontrast << endl;
+    cout << endl << "Now computing the nonlinear scale space!!" << endl;
+
+    options_.kcontrast = options_.kcontrast/options_.turbidity;
   if (options_.verbosity == true) {
     cout << "kcontrast = " << options_.kcontrast << endl;
     cout << endl << "Now computing the nonlinear scale space!!" << endl;

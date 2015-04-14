@@ -3,16 +3,18 @@
 function hpoints = applyRotation(image,points,H)
 
 
-
+        aux=points(:,1);
+        points(:,1) = points(:,2);
+        points(:,2) = aux;
     
-    degrees = asind(H(2,1));
+    %degrees = asind(H(2,1));
     
     pointsImage = zeros(size(image));
     for i=1:size(points,1)
-        pointsImage(uint32(points(i,1)),uint32(points(i,2)))=1;
+        pointsImage(uint32(points(i,2)),uint32(points(i,1)))=1;
     end
     
-    filterImage = imrotate(pointsImage,degrees);
+    filterImage = imtransform(pointsImage,H);
     
     classComp = bwconncomp(filterImage);
 
@@ -21,7 +23,8 @@ function hpoints = applyRotation(image,points,H)
                  
     hpoints = cell2mat(centroids2');
     
-    
-    
+          aux=hpoints(:,1);
+          hpoints(:,1) = hpoints(:,2);
+          hpoints(:,2) = aux;
 
 end
