@@ -57,7 +57,7 @@ function c =estimateC(J,I,dmap,Binf)
     tmap = zeros(xf-xi +1,1);
     for i=xi:xf
         B = I(i) - Binf;
-        C = J(i);
+        C = J(i) - Binf;
         tmap(i-xi+1) = B/C;
 %             tmap(i-xi+1,j-yi+1)  = -log(tmap(i-xi+1,j-yi+1));
 %             tmap(i-xi+1,j-yi+1)  = real(tmap(i-xi+1,j-yi+1) );
@@ -84,9 +84,10 @@ function c =estimateC(J,I,dmap,Binf)
     %imshow(tmap);
 % 
     dmap = dmap(xi:xf);
-     tmap = - log(tmap);
+     tmap = log(tmap);
       tmap = real(tmap);
-     %tmap= tmap*8.2940496401;
+    % tmap= tmap*8.2940496401;
+   
      tmap = tmap.*dmap;
 %     %figure
 %     %imshow(tmap);

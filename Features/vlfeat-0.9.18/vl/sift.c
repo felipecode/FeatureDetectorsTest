@@ -1270,6 +1270,7 @@ vl_sift_detect (VlSiftFilt * f)
     int y = f-> keys [i] .iy ;
     int s = f-> keys [i]. is ;
 
+
     double Dx=0,Dy=0,Ds=0,Dxx=0,Dyy=0,Dss=0,Dxy=0,Dxs=0,Dys=0 ;
     double A [3*3], b [3] ;
 
@@ -1277,7 +1278,9 @@ vl_sift_detect (VlSiftFilt * f)
     int dy = 0 ;
 
     int iter, i, j ;
-
+    printf("score  \n");
+    
+    
     for (iter = 0 ; iter < 5 ; ++iter) {
 
       x += dx ;
@@ -1396,7 +1399,7 @@ vl_sift_detect (VlSiftFilt * f)
       double xn = x + b[0] ;
       double yn = y + b[1] ;
       double sn = s + b[2] ;
-
+        
       vl_bool good =
         vl_abs_d (val)  > tp                  &&
         score           < (te+1)*(te+1)/te    &&
@@ -1411,16 +1414,17 @@ vl_sift_detect (VlSiftFilt * f)
         sn              >= s_min              &&
         sn              <= s_max ;
 
+
       if (good) {
         k-> o     = f->o_cur ;
         k-> ix    = x ;
         k-> iy    = y ;
         k-> is    = s ;
         k-> s     = sn ;
-        k-> x     = xn * xper ;
+        k-> x     = xn * xper;
         k-> y     = yn * xper ;
         k-> sigma = f->sigma0 * pow (2.0, sn/f->S) * xper ;
-        k -> score = score;
+        k -> score = vl_abs_d (val);
         ++ k ;
       }
 
@@ -1428,7 +1432,7 @@ vl_sift_detect (VlSiftFilt * f)
   } /* next keypoint to refine */
 
   /* update keypoint count */
-  f-> nkeys = (int)(k - f->keys) ;
+  f-> nkeys = (int)(k - f->keys);
 }
 
 
@@ -2179,6 +2183,8 @@ vl_sift_keypoint_init (VlSiftFilt const *f,
   is  = (int)(s + 0.5) ;
   is  = VL_MIN(is, f->s_max - 2) ;
   is  = VL_MAX(is, f->s_min + 1) ;
+  float score;
+  score = 10;
 
   xper = pow (2.0, o) ;
   ix   = (int)(x / xper + 0.5) ;
@@ -2193,6 +2199,7 @@ vl_sift_keypoint_init (VlSiftFilt const *f,
   k -> x = x ;
   k -> y = y ;
   k -> s = s ;
+  k -> score = score;
 
   k->sigma = sigma ;
 }

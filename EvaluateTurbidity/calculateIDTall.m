@@ -31,22 +31,22 @@
     Iim= imvec{1};
     distance = 0.58;
      dmapR = calculateDmap(Iim(:,:,1),distance); 
-    [I, spImage] = spAverageImage(imvec{1},128);
-    % [dmap] = spAverageImageWSpImageGray(dmapR,spImage);
+    [I, spImage] = spAverageImageGray(imvec{1},164);
+     [dmap] = spAverageImageWSpImageGray(dmapR,spImage);
     for i=2:length(imvec)
-        SDIvec = [ SDIvec ,100 * floor((1- ssim_index(rgb2gray(imvec{1}),rgb2gray(imvec{i})))*10000)/10000];  
+        %SDIvec = [ SDIvec ,100 * floor((1- ssim_index(rgb2gray(imvec{1}),rgb2gray(imvec{i})))*10000)/10000];  
         
         Binf = binfvec{i};
-        BinfR(:,:,1) = imresize(Binf(:,:,1), size(Iim(:,:,1)));
-        BinfR(:,:,2) = imresize(Binf(:,:,2), size(Iim(:,:,2)));
-        BinfR(:,:,3) = imresize(Binf(:,:,3), size(Iim(:,:,3)));
-        [Binf  ] = spAverageImageWSpImage(BinfR,spImage);
+        BinfR= imresize(Binf, size(Iim));
+        %BinfR(:,:,2) = imresize(Binf(:,:,2), size(Iim(:,:,2)));
+        %BinfR(:,:,3) = imresize(Binf(:,:,3), size(Iim(:,:,3)));
+        [Binf  ] = spAverageImageWSpImageGray(BinfR,spImage);
         
        
-       % [J] = spAverageImageWSpImage(imvec{i}, spImage);
+        [J] = spAverageImageWSpImageGray(imvec{i}, spImage);
         
         %[J, spImage] = spAverageImage(imvec{i} ,96);
-         x= [ x, estimateIDT(imvec{i},I,Binf,dmapR,i,spImage)];
+         x= [ x, estimateIDT(J,I,Binf,dmap,i,spImage)];
 
          
     end

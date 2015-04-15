@@ -7,7 +7,7 @@ function idt = estimateIDT(J,I,Binf,dmap,i,spImage)
     %[H S I ] = rgb2hsv(I);
     %[H S J ] = rgb2hsv(J);
     %Binf = double(rgb2gray(Binf))/255;    
-    Binf = double(Binf)/255;
+    Binf = double(Binf);
     J = double(J);
     I = double(I);
 
@@ -21,17 +21,17 @@ function idt = estimateIDT(J,I,Binf,dmap,i,spImage)
     
     
         
-    %Bvec = sort(Binf(:,1),'descend');  
+    Bvec = sort(Binf,'descend');  
 
-    %BinfR = mean(Bvec(1:15))
+    Binf = mean(Bvec(1:15))
         
-    %Bvec = sort(Binf(:,2),'descend');  
+  %  Bvec = sort(Binf(:,2),'descend');  
 
-    %BinfG = mean(Bvec(1:15))
+  %  BinfG = mean(Bvec(1:15))
         
-    %Bvec = sort(Binf(:,3),'descend'); 
+   % Bvec = sort(Binf(:,3),'descend'); 
 
-    %BinfB = mean(Bvec(1:15))
+ %   BinfB = mean(Bvec(1:15))
 
 
     
@@ -43,18 +43,18 @@ function idt = estimateIDT(J,I,Binf,dmap,i,spImage)
 
         
     %cR = solveCfun (double(J(:,:,1)),Binf(:,1),I(:,1),0.78,dmap,spImage)
-    cR = estimateC(J(:,1),I(:,1),dmap,BinfR);
-    fprintf('cR = %f',cR);
+    idt = estimateC(J,I,dmap,Binf);
+    fprintf('idt = %f',idt);
      %print(sprintf('%d_r',i),'-dpng');
      %close;
     %cG = solveCfun (double(J(:,:,2)),Binf(:,2),I(:,2),0.78,dmap,spImage)
-    cG = estimateC(J(:,2),I(:,2),dmap,BinfG);
-    fprintf('cG = %f',cG);
+   % cG = estimateC(J(:,2),I(:,2),dmap,BinfG);
+   % fprintf('cG = %f',cG);
      %    print(sprintf('%d_g',i),'-dpng');
      %close;
     %cB = solveCfun (double(J(:,:,3)),Binf(:,3),I(:,3),0.78,dmap,spImage)
-    cB = estimateC(J(:,3),I(:,3),dmap,BinfB);
-    fprintf('cB = %f',cB);
+  %  cB = estimateC(J(:,3),I(:,3),dmap,BinfB);
+ %   fprintf('cB = %f',cB);
      %    print(sprintf('%d_b',i),'-dpng');
      %close;
     
@@ -94,6 +94,6 @@ function idt = estimateIDT(J,I,Binf,dmap,i,spImage)
 %     
 %     
 %     idt = (idtR + idtG + idtB)/2;
-idt=(cR + cG + cB)/3;
+%idt=(cR + cG + cB)/3;
     
 end

@@ -36,8 +36,19 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
          % Have to change the X by the y ! Yes. Crazy stuff
         aux=points(:,1);
         points(:,1) = points(:,2);
-        points(:,2) = aux;               
-                
+        points(:,2) = aux;         
+        
+        
+%         
+%         [sortedValues,sortIndex] = sort(points(:,5),'descend');
+%        'primeiro'
+%        sortedValues(1)
+%        'n'
+%        sortedValues(N)
+%        'n*3'
+%         sortedValues(N*3)
+%         
+        
         length(points)
          
          if length(points) > 5
@@ -51,11 +62,12 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         %rmpath Kaze
         
      elseif strcmp(algoritmo,'kazeg2')
-        addpath Kaze
-        im = rgb2gray(im);
 
-        points = kaze(im,'dthreshold',0.0000005,'diffusivity',1);
-         points=uint32(points);
+
+
+        im=uint8(im*255);
+        points = kaze(im,'dthreshold',0,'diffusivity',1,'soffset',1.6,'turbidity',turb,'verbose',3);
+       %  points=uint32(points);
                
          % Have to change the X by the y ! Yes. Crazy stuff
         aux=points(:,1);
@@ -72,13 +84,15 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         %drawcircles(points);
         %hold off 
 
-        rmpath Kaze
-     elseif strcmp(algoritmo,'kazeg3')
-        addpath Kaze
-        im = rgb2gray(im);
 
-        points = kaze(im,'dthreshold',0.00005,'diffusivity',2);
-         points=uint32(points);
+     elseif strcmp(algoritmo,'kazeg3')
+%         addpath Kaze
+%         im = rgb2gray(im);
+
+
+        im=uint8(im*255);
+        points = kaze(im,'dthreshold',0,'diffusivity',2,'soffset',1.6,'turbidity',turb,'verbose',3);
+        % points=uint32(points);
                
          % Have to change the X by the y ! Yes. Crazy stuff
         aux=points(:,1);
@@ -96,7 +110,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         %drawcircles(points);
         %hold off 
 
-        rmpath Kaze
+%         rmpath Kaze
      
     elseif strcmp(algoritmo,'censtar')
 
@@ -251,9 +265,9 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         
         %im(950,950) = 0;
         im= single(im);
-        [points d info] = vl_sift(im);
+        [points ] = vl_sift(im);
         points = points';
-        im = uint8(im);
+        %im = uint8(im);
         
         
         
@@ -265,13 +279,60 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         
         % points=removeBorderPoints(points,im);
         length(points)
-        
+%            figure;
+%         imshow(im);
+%         hold on
+%         drawcircles(points);
+%         
+          
+       
         if length(points) > 5                
             
-             points = especialnms(im,points,N,delta,info.edgeScores);
-         end
+             points = especialnms(im,points,N,delta,points(:,5));
+        end
+         
+        figure;
+        imshow(im);
+        hold on
+        drawcircles(points);
 
 
+    elseif strcmp(algoritmo,'iisift')
+        
+
+%        im = rgb2gray(im);
+
+        
+        %im(950,950) = 0;
+        im= single(im);
+        [points ] = vl_sift2(im);
+        points = points';
+        %im = uint8(im);
+        
+        
+        
+        
+        % Have to change the X by the y ! Yes. Crazy stuff
+        aux=points(:,1);
+        points(:,1) = points(:,2);
+        points(:,2) = aux;
+        
+        % points=removeBorderPoints(points,im);
+        length(points)
+%            figure;
+%         imshow(im);
+%         hold on
+%         drawcircles(points);
+
+        if length(points) > 5                
+            
+             points = especialnms(im,points,N,delta,points(:,5));
+        end
+         
+%         figure;
+%         imshow(im);
+%         hold on
+%         drawcircles(points);
     elseif strcmp(algoritmo,'surf')
         %addpath Surf  
         

@@ -9,7 +9,7 @@ function drawcircles(points,style,radius)
         radius = 2;
     end
     
-    NOP=1000;
+    NOP=3;
     for i=1:size(points,1)
         
         center = [points(i,2),points(i,1)];

@@ -1,8 +1,8 @@
 % Photo 2
-%xi= 332;
-%xf = 3890;
-%yi = 387;
-%yf = 2693;
+xi= 332;
+xf = 3890;
+yi = 387;
+yf = 2693;
 
 % Black case
 %xi= 523;
@@ -11,10 +11,10 @@
 %yf = 2427;
 
 % Photo 1
-xi = 242;
-xf = 3777;
-yi= 375;
-yf = 2656;
+%xi = 242;
+%xf = 3777;
+%yi= 375;
+%yf = 2656;
 
 % center 1779/1125
 
@@ -53,9 +53,9 @@ for i=1:size(imvec,2)
     
 
     %imcut = bfilter2(double(imcut)/255,5,[3 0.1]);
-    i=13;
+    i=12;
     
-    imwrite(imcut,strcat('Images/Photo1/Cortadas/',sprintf('%d.jpg',i)));
+    imwrite(imcut,strcat('Images/Photo2/Cortadas/',sprintf('%d.jpg',i)));
     
 
 end

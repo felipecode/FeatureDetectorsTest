@@ -344,7 +344,7 @@ mexFunction(int nout, mxArray *out[],
         keys  = vl_sift_get_keypoints  (filt) ;
         nkeys = vl_sift_get_nkeypoints (filt) ;
         i     = 0 ;
-
+        
         if (verbose > 1) {
           printf ("vl_sift: detected %d (unoriented) keypoints\n", nkeys) ;
         }
@@ -358,9 +358,11 @@ mexFunction(int nout, mxArray *out[],
         int                   nangles ;
         VlSiftKeypoint        ik ;
         VlSiftKeypoint const *k ;
-
+        
         /* Obtain keypoint orientations ........................... */
         if (nikeys >= 0) {
+        
+        
           vl_sift_keypoint_init (filt, &ik,
                                  ikeys [4 * i + 1] - 1,
                                  ikeys [4 * i + 0] - 1,
@@ -371,7 +373,7 @@ mexFunction(int nout, mxArray *out[],
           }
 
           k = &ik ;
-
+         
           /* optionally compute orientations too */
           if (force_orientations) {
             nangles = vl_sift_calc_keypoint_orientations
@@ -381,6 +383,7 @@ mexFunction(int nout, mxArray *out[],
             nangles    = 1 ;
           }
         } else {
+
           k = keys + i ;
           nangles = vl_sift_calc_keypoint_orientations
             (filt, angles, k) ;
@@ -412,11 +415,16 @@ mexFunction(int nout, mxArray *out[],
 
           /* Save back with MATLAB conventions. Notice tha the input
            * image was the transpose of the actual image. */
-          frames [4 * nframes + 0] = k -> y + 1 ;
-          frames [4 * nframes + 1] = k -> x + 1 ;
-          frames [4 * nframes + 2] = k -> sigma ;
-          frames [4 * nframes + 3] = VL_PI / 2 - angles [q] ;
-          frames [4 * nframes + 4] = k -> score ;
+          
+          // k -> score = 10;
+          
+          //printf("%f \n",k -> y + 1);
+          
+          frames [5 * nframes + 0] = k -> y + 1 ;
+          frames [5 * nframes + 1] = k -> x + 1 ;
+          frames [5 * nframes + 2] = k -> sigma ;
+          frames [5 * nframes + 3] = VL_PI / 2 - angles [q] ;
+          frames [5 * nframes + 4] = k -> score ;
 
           if (nout > 1) {
             if (! floatDescriptors) {
@@ -456,9 +464,9 @@ mexFunction(int nout, mxArray *out[],
         (2, dims, mxDOUBLE_CLASS, mxREAL) ;
 
       /* set array content to be the frames buffer */
-      dims [0] = 4 ;
+      dims [0] = 5 ;
       dims [1] = nframes ;
-      mxSetPr         (out[OUT_FRAMES], frames) ;
+      mxSetPr         (out[OUT_FRAMES], frames);
       mxSetDimensions (out[OUT_FRAMES], dims, 2) ;
 
       if (nout > 1) {
