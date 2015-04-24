@@ -19,13 +19,19 @@
     x = x./max(x);
     x= round(x.*100)/100;
     
+    e=1;
+    N=100;
+    
+    
+    eval(sprintf('harris%de%dp1',N))
+    
     figure;     
     %pt = plot(x,harvec,'b-d',x,hesvec,'r-*',x,lapvec,'y-o',x,harcolor,'g-s',x,harcolorb,'g-.x',x,harlapvec,'k-s',x,heslapvec,'c-o',x,siftvec,'m-x',x,surfvec,'c-.*');
-    pt = plot(x,harvec,'b-d',x,hesvec,'b-*',x,lapvec,'b-o',x,siftvec,'m--x',x,surfvec,'m--*',x,cenpoly,'g-d',x,censtar,'g-s',x,kazeg1,'r-.d',x,kazeg2,'r-.o',x,kazeg3,'r-.*');
+    pt = plot(x,harvec,'b-d',x,hesvec,'b-*',x,lapvec,'b-o',x,siftvec,'m--x',x,surfvec,'m--*',x,harlap,'m--*',x,heslap,'m--*',x,cenpoly,'g-d',x,censtar,'g-s',x,kazeg1,'r-.d',x,kazeg2,'r-.o',x,kazeg3,'r-.*');
     %set(gca,'XScale','log'); 
     set(gca, 'XGrid','on');
     set(gca, 'YGrid','on');
-    legend1=legend('Harris','Hessian','Laplacian','DoG','FastHes','CenSurPoly','CenSurStar','Kaze G1','Kaze G2','Kaze G3');
+    legend1=legend('Harris','Hessian','Laplacian','DoG','FastHes','Harris-Laplace','Hessian-Laplace','CenSurPoly','CenSurStar','Kaze G1','Kaze G2','Kaze G3');
     set(legend1,'FontSize',40,'FontName','Courier 10 Pitch');
 
     title('Photo 1','FontSize',50,'FontName','Courier 10 Pitch');

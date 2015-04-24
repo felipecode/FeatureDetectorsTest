@@ -4,7 +4,7 @@ function points=laplacian(im,N,delta)
 % 
        sigma = 1.2;
        k=7;
-% 
+    borderless= 2*k*sigma;
 %     derivative masks
 %     s_D = 0.7*sigma;
 %     x  = -round(3*s_D):round(3*s_D);
@@ -50,11 +50,11 @@ function points=laplacian(im,N,delta)
 %     imshow(Ixy);
     H = abs(Ixx + Iyy); 
     
-    C = 3*k;
-        H((size(im,1)-C):size(im,1),:) = 0;
-    H(:,(size(im,2)-C):size(im,2)) = 0;
-    H(1:C,:) = 0;
-    H(:,1:C) = 0;
+    %C = 3*k;
+    H((size(im,1)-borderless):size(im,1),:) = 0;
+    H(:,(size(im,2)-borderless):size(im,2)) = 0;
+    H(1:borderless,:) = 0;
+    H(:,1:borderless) = 0;
     % figure
     % title('Hessian');
     % imshow(H);

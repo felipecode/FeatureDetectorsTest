@@ -23,8 +23,12 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         %imshow(im);
         %hold on
         %drawcircles(points);
-        %hold off 
-        rmpath Harris
+        %hold off
+        %imshow(im);
+       %hold on
+      % drawcircles(points);
+       %hold off 
+        %rmpath Harris
 
    elseif strcmp(algoritmo,'kazeg1')
         %addpath Kaze
@@ -54,10 +58,10 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
          if length(points) > 5
             points =especialnms(im,points,N,delta,points(:,3));
          end
-       % imshow(im);
-       % hold on
-       % drawcircles(points);
-       % hold off 
+%        imshow(im);
+%        hold on
+%        drawcircles(points);
+%        hold off 
 
         %rmpath Kaze
         
@@ -164,7 +168,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
 %        drawcircles(points)
 %         length(points)
         
-        points=removeBorderPoints(points,im);
+       % points=removeBorderPoints(points,im);
         
         if length(points) > 5
             points = especialnms(im,points,N,delta,points(:,4));
@@ -176,7 +180,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
 %         points=int32(points);
 %         points=points';
 %         points = especialnms(im,points,N,delta);
-%        figure;
+%         figure;
 %        imshow(im);
 %        hold on
 %        drawcircles(points)
@@ -222,7 +226,10 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         points = Hessian(im,N,delta);
         
 
-        
+       %imshow(im);
+       %hold on
+       %drawcircles(points);
+      % hold off 
                 
         %figure;
         %imshow(im);
@@ -245,17 +252,19 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         
     elseif strcmp(algoritmo,'laplacian')
         %im = rgb2gray(im);
-        addpath Laplacian
+       % addpath Laplacian
         points = laplacian(im,N,delta);
         
         %if length(points) > 5
         %    points = especialnms(im,points,N,delta);
-        %end
-%          figure;
-%          imshow(im);
-%          hold on
-%          drawcircles(points)
-        rmpath Laplacian
+%         %end
+         %figure;
+         %imshow(im);
+         %hold on
+         %drawcircles(points)
+       
+         
+         %rmpath Laplacian
         
     elseif strcmp(algoritmo,'sift')
         
@@ -292,9 +301,9 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         end
          
         figure;
-        imshow(im);
-        hold on
-        drawcircles(points);
+         imshow(im);
+         hold on
+         drawcircles(points);
 
 
     elseif strcmp(algoritmo,'iisift')

@@ -5,7 +5,7 @@ function points=Hessian(im,N,delta)
 % 
        sigma = 1.8;
        k=7;
-       borderless= k*sigma;
+       borderless= 2*k*sigma;
 % 
 %     derivative masks
 %     s_D = 0.7*sigma;

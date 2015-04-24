@@ -86,9 +86,12 @@ function c =estimateC(J,I,dmap,Binf)
     dmap = dmap(xi:xf);
      tmap = log(tmap);
       tmap = real(tmap);
-    % tmap= tmap*8.2940496401;
+    % Considering the resolution of 4 pixel by millimiters and the distance
+    % being considered in 
+      
+     tmap= tmap*8.2940496401;
    
-     tmap = tmap.*dmap;
+     tmap = tmap./dmap;
 %     %figure
 %     %imshow(tmap);
 %     %dmax = max(max(tmap));

@@ -6,7 +6,7 @@ function imvec = loadImages(path)
 
     %imvec = zeros(size()
     imvec{length(pngFiles)} = 1;
-    for k = 1:length(pngFiles)
+    for k = 12:12
         filename = pngFiles(k).name;
         [I, MAP] = imread(strcat(path,'/',filename));
         

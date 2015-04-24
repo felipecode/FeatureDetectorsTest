@@ -45,6 +45,9 @@ CenResp = sResp - cResp;
 
 %CenResp =   IntegralImage_HexaIntegral(r - l + 1, c - b, 2 * l - 1, w,img) - IntegralImage_HexaIntegral(r - l + 1, c - fix(l / 2), 2 * l - 1, l, img);
 
+figure;
+imshow(mat2gray(CenResp));
+
 % Normalise the filter responses with respect to their size
 
 % Take also the harris responses for each pixel. This will be tested
