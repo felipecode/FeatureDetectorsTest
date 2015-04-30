@@ -18,30 +18,31 @@ s = (FastHessianData.init_sample);
 
 % Calculate approximated determinant of hessian values
 if (FastHessianData.octaves >= 1)
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w,   h,   s,   9);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, s, 15);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, s, 21);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, s, 27);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w,   h,   s,   9);%9
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, s, 15);%15
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, s, 21);%21
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w, h, s, 27);%27
+    
 end
 
 if (FastHessianData.octaves >= 2)
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 2, h / 2, s * 2, 39);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 2, h / 2, s * 2, 51);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 2, h / 2, s * 2, 39);%39
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 2, h / 2, s * 2, 51);%51
 end
 
 if (FastHessianData.octaves >= 3)
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 4, h / 4, s * 4, 75);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 4, h / 4, s * 4, 99);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 4, h / 4, s * 4, 75);%75
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 4, h / 4, s * 4, 99);%99
 end
 
 if (FastHessianData.octaves >= 4)
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 8, h / 8, s * 8, 147);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 8, h / 8, s * 8, 195);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 8, h / 8, s * 8, 147);%147
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 8, h / 8, s * 8, 195);%195
 end
 
 if (FastHessianData.octaves >= 5)
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 16, h / 16, s * 16, 291);
-    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 16, h / 16, s * 16, 387);
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 16, h / 16, s * 16, 291);%291
+    j=j+1; responseMap{j}=FastHessian_ResponseLayer(w / 16, h / 16, s * 16, 387);%387
 end
  
 % Extract responses from the image

@@ -32,7 +32,7 @@ function pointsNMS = especialnms(im,points,N,radius,measure)
     % imshow(maskSiS);
 %     
     [r,c,max_local] = findLocalMaximum(maskSiS,radius);
-    length(r)
+    %length(r)
     
     
     if(N > length(r))
@@ -47,14 +47,13 @@ function pointsNMS = especialnms(im,points,N,radius,measure)
     %size(max_local)
     rf = zeros(N,1);
     cf = zeros(N,1);
-    
+    response =  sortedValues(1:N);
     %maxIndex
     %size(r)
     %size(c)
     for i=1:N        
         rf(i) = mod(maxIndex(i),size(im,1))+1;
         cf(i) = uint16(maxIndex(i)/size(im,1))+1;
-        
     end
-    pointsNMS = [rf cf];
+    pointsNMS = [rf cf response];
     

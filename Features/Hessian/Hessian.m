@@ -3,7 +3,7 @@ function points=Hessian(im,N,delta)
    % im = double(im(:,:,1));
    im = double(im(:,:,1));
 % 
-       sigma = 1.8;
+       sigma = 1.6;
        k=7;
        borderless= 2*k*sigma;
 % 
@@ -93,7 +93,7 @@ function points=Hessian(im,N,delta)
     %size(c)
     for i=1:N        
         rf(i) = mod(maxIndex(i),size(im,1))+1;
-        cf(i) = uint16(maxIndex(i)/size(im,1));
+        cf(i) = uint16(ceil(maxIndex(i)/size(im,1)));
         
     end
     
@@ -102,7 +102,7 @@ function points=Hessian(im,N,delta)
     
     
     % build interest points
-    points = [rf,cf];
+    points = [rf,cf, sortedValues(1:N)];
     
 
 end

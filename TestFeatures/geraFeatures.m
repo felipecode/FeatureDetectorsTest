@@ -119,23 +119,18 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
     elseif strcmp(algoritmo,'censtar')
 
       %  imout = rgb2gray(im);
-        Options=struct('tresh',0.000000000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',0,'harrisThresh',1);
-        pointsStruct = CenSur(im',Options);
-        
-         for i=1:size(pointsStruct,2)
-            points(i,1) = pointsStruct(1,i).x;
-            points(i,2) = pointsStruct(1,i).y;
-            points(i,4) = pointsStruct(1,i).response;
-         end
-        
-         
-       %   figure;
-       % imshow(im);
-      %  hold on
-       % drawcircles(points)
+        %Options=struct('tresh',0.0000005,'octaves',5,'init_sample',2,'upright',false,'extended',false,'verbose',false,'nSides',6,'poly',0,'harrisThresh',0.000001);
+        kpts = cv.StarDetector(uint8(im'*255),'ResponseThreshold',0,'MaxSize',128,'SuppressNonmaxSize',0,'LineThresholdProjected',10,'LineThresholdBinarized',12);
+        points=zeros(length(kpts),3);
         length(points)
+        for i=1:length(kpts)
+        points(i,:)=[kpts(i).pt , kpts(i).response];
+        end
+%         im = uint8(im);
+%         points=removeBorderPoints(points,im);
+%         length(points)
         if length(points) > 5
-            points = especialnms(im,points,N,delta,points(:,4));
+            points = especialnms(im,points,N,delta,points(:,3));
         end
         %points = points';
         %if length(points) > 5
@@ -160,7 +155,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
             points(i,2) = pointsStruct(1,i).y;
             points(i,4) = pointsStruct(1,i).response;
          end
-        
+        length(points)
          
 %          figure;
 %        imshow(im);
@@ -274,7 +269,8 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         
         %im(950,950) = 0;
         im= single(im);
-        [points ] = vl_sift(im);
+        %[points ] = vl_sift(im,'verbose');
+        [points, d, info] =vl_covdet(im,'PeakThreshold',0,'EdgeThreshold',10,'LaplacianPeakThreshold',0);
         points = points';
         %im = uint8(im);
         
@@ -282,7 +278,7 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         
         
         % Have to change the X by the y ! Yes. Crazy stuff
-        aux=points(:,1);
+        aux=points(:,1); 
         points(:,1) = points(:,2);
         points(:,2) = aux;
         
@@ -294,10 +290,10 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
 %         drawcircles(points);
 %         
           
-       
+        size(points)
         if length(points) > 5                
             
-             points = especialnms(im,points,N,delta,points(:,5));
+             points = especialnms(im,points,N,delta,info.peakScores);
         end
          
         figure;
@@ -385,7 +381,39 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
         % imshow(im);
         % hold on
         % drawcircles(points)
-       
+        
+        
+   elseif strcmp(algoritmo,'hessianlap2')
+        
+        %im = rgb2gray(im);
+        im= single(im);
+        [points, d, info] =vl_covdet(im,'Method','HessianLaplace','PeakThreshold',0,'EdgeThreshold',10,'LaplacianPeakThreshold',0);
+              points = points';  
+         aux=points(:,1);
+        points(:,1) = points(:,2);
+        points(:,2) = aux;
+        
+        %fprintf('Points');
+        %size(points)
+
+        %im = uint8(im);
+        %aux=points(:,1);
+        %points(:,1) = points(:,2);
+        %points(:,2) = aux;
+        
+%         length(points)
+%          figure
+%          imshow(im);
+%          hold on
+%          drawcircles(points)
+         
+        if length(points) > 3            
+             points = especialnms(im,points(:,1:2),N,delta,info.peakScores);
+         end
+%          figure
+%          imshow(im);
+%          hold on
+%          drawcircles(points)       
         
     elseif strcmp(algoritmo,'harrislap')
        % addpath HarrisLaplace
@@ -404,36 +432,39 @@ function qFeatures=geraFeatures(im,algoritmo,N,delta,turb)
          %hold on
          %drawcircles(points)
         
-%      elseif strcmp(algoritmo,'harrislap2')
-%         
-%         im = rgb2gray(im);
-%         im= single(im);
-%         [points d info] =vl_covdet(im,'Method','HarrisLaplace');
-%         
-%       
-%         %fprintf('Points');
-%         %size(points)
-%         points = points';
-%         im = uint8(im);
-%         %aux=points(:,1);
-%         %points(:,1) = points(:,2);
-%         %points(:,2) = aux;
-%         
-%         length(points)
-% %          figure
-% %          imshow(im);
-% %          hold on
-% %          drawcircles(points)
-%          
-%         if length(points) > 5            
-%              points = especialnms(im,points(:,1:2),N,delta,info.edgeScores);
-%          end
-% %          figure
-% %          imshow(im);
-% %          hold on
-% %          drawcircles(points)
-% 
-%         
+     elseif strcmp(algoritmo,'harrislap2')
+        
+        %im = rgb2gray(im);
+        im= single(im);
+        [points, d, info] =vl_covdet(im,'Method','HarrisLaplace','PeakThreshold',0,'EdgeThreshold',10,'LaplacianPeakThreshold',0);
+              points = points';  
+         aux=points(:,1);
+        points(:,1) = points(:,2);
+        points(:,2) = aux;
+        
+        %fprintf('Points');
+        %size(points)
+
+        %im = uint8(im);
+        %aux=points(:,1);
+        %points(:,1) = points(:,2);
+        %points(:,2) = aux;
+        
+        length(points)
+         figure
+         imshow(im);
+         hold on
+         drawcircles(points)
+         
+        if length(points) > 5            
+             points = especialnms(im,points(:,1:2),N,delta,info.peakScores);
+         end
+%          figure
+%          imshow(im);
+%          hold on
+%          drawcircles(points)
+
+        
     elseif strcmp(algoritmo,'harriscolor')
         addpath ColorHarris
         [EnIm]= ColorHarris(im,1.5,5,0.04,1);

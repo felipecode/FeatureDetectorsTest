@@ -22,21 +22,24 @@ function points = kp_harrislaplace(img)
     % points = kp_harrislaplace(img)
     
     % IMAGE PARAMETERS
-    img         = double(img(:,:,1));
-    img_height  = size(img,1);
-    img_width   = size(img,2);
+    img         = single(img(:,:,1));
 
     % SCALE PARAMETERS
     sigma_begin = 1.8;
     sigma_step  = 1.2;
     sigma_nb    = 13;
+    % Rescale to get a lot 
+   % img = imresize(img,2);
+   % img_height  = size(img,1);
+  %  img_width   = size(img,2);
+
     sigma_array = (sigma_step.^(0:sigma_nb-1))*sigma_begin
     
 
     % PART 1 : HARRIS
     harris_pts = zeros(0,4);
     for i=1:sigma_nb
-
+        i
         % scale (standard deviation)
         s_I = sigma_array(i);   % int�gration scale
         s_D = 0.7*s_I;          % derivative scale %0.7

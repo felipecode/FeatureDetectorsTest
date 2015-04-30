@@ -1528,7 +1528,7 @@ vl_covdet_new (VlCovDetMethod method)
       assert(0) ;
   }
 
-  self->nonExtremaSuppression = 0.5 ;
+  self->nonExtremaSuppression = 0 ;
   self->features = NULL ;
   self->numFeatures = 0 ;
   self->numFeatureBufferSize = 0 ;
@@ -1968,7 +1968,7 @@ vl_covdet_detect (VlCovDet * self)
         case VL_COVDET_METHOD_MULTISCALE_HARRIS:
           _vl_harris_response(clevel,
                               level, oct.width, oct.height, oct.step,
-                              sigma, 1.4 * sigma, 0.05) ;
+                              sigma, 1.6 * sigma, 0.05) ;
           break ;
 
         case VL_COVDET_METHOD_HESSIAN:
@@ -2016,7 +2016,7 @@ vl_covdet_detect (VlCovDet * self)
                                            extrema[3*index+0],
                                            extrema[3*index+1],
                                            extrema[3*index+2]) ;
-            ok &= fabs(refined.peakScore) > self->peakThreshold ;
+            //ok &= fabs(refined.peakScore) > self->peakThreshold ;
             ok &= refined.edgeScore < self->edgeThreshold ;
             if (ok) {
               double sigma = cgeom.baseScale *

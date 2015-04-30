@@ -38,6 +38,8 @@ else
     surroundMatrix = drawStarPolygon(CenSurData.nSides,4*rl.filter +1);
     
 end
+%centerMatrix = centerMatrix./sum(sum(centerMatrix));
+%surroundMatrix = surroundMatrix./sum(sum(surroundMatrix));
 
 cResp = conv2(img,centerMatrix,'same');
 sResp = conv2(img,surroundMatrix,'same');
@@ -45,15 +47,18 @@ CenResp = sResp - cResp;
 
 %CenResp =   IntegralImage_HexaIntegral(r - l + 1, c - b, 2 * l - 1, w,img) - IntegralImage_HexaIntegral(r - l + 1, c - fix(l / 2), 2 * l - 1, l, img);
 
-figure;
-imshow(mat2gray(CenResp));
-
+%figure;
+%imshow(mat2gray(CenResp));
+%figure;
+%imshow(mat2gray(cResp));
+%figure;
+%imshow(mat2gray(sResp));
 % Normalise the filter responses with respect to their size
 
 % Take also the harris responses for each pixel. This will be tested
 % if it is below a certain threshold
-sigma = 1.8;
-
+    sigma = 1.8;
+%close all;
  s_D = 0.7*sigma;
  x  = -round((2*rl.filter +1)*s_D):round((2*rl.filter +1)*s_D);
  dx = x .* exp(-x.*x/(2*s_D*s_D)) ./ (s_D*s_D*s_D*sqrt(2*pi));

@@ -31,7 +31,7 @@ function points = kp_harris(im,N,delta)
 
     % only luminance value
     im = double(im(:,:,1));
-    sigma = 1.8;
+    sigma = 1.6;
 
     % derivative masks
     s_D = 0.7*sigma;
@@ -83,6 +83,7 @@ function points = kp_harris(im,N,delta)
     for i=1:N        
         rf(i) = mod(maxIndex(i),size(im,1))+1;
         cf(i) = uint16(maxIndex(i)/size(im,1))+1;
+        
        
     end
     
@@ -98,5 +99,5 @@ function points = kp_harris(im,N,delta)
         
 
     % build interest points
-    points = [rf,cf];
+    points = [rf,cf, sortedValues(1:N) ];
 end

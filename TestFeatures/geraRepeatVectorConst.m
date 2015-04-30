@@ -15,8 +15,8 @@ function repVec = geraRepeatVectorConst(detector,imvec,N,delta,epsilon,turbVec)
     repVec(1) = N;
     
     for i=2:length(imvec)
-        turbVec(i)
-         features= geraFeatures(imvec{i},detector,N,delta,turbVec(i-1));  % the subsequent image features
+        %turbVec(i)
+         features= geraFeatures(imvec{i},detector,N,delta,1);  % the subsequent image features
          if ~isempty(features)
              %validFeatures = intersect(features,region,'rows'); 
 

@@ -2,7 +2,7 @@ function points=laplacian(im,N,delta)
     
    im = double(im(:,:,1));
 % 
-       sigma = 1.2;
+       sigma = 1.6;
        k=7;
     borderless= 2*k*sigma;
 %     derivative masks
@@ -83,12 +83,12 @@ function points=laplacian(im,N,delta)
     %size(c)
     for i=1:N        
         rf(i) = mod(maxIndex(i),size(im,1))+1;
-        cf(i) = uint16(maxIndex(i)/size(im,1));
+        cf(i) = uint16(maxIndex(i)/size(im,1)) +1;
         
     end
     
     
     % build interest points
-    points = [rf,cf];
+    points = [rf,cf, sortedValues(1:N)];
     
 end
